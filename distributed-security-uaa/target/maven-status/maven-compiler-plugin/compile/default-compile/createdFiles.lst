@@ -1,0 +1,8 @@
+com\atguigu\springcloud\dao\UserDao.class
+com\atguigu\springcloud\service\SpringDataUserDetailsService.class
+com\atguigu\springcloud\config\AuthorizationServer.class
+com\atguigu\springcloud\UaaApplication.class
+com\atguigu\springcloud\config\WebSecurityConfig.class
+com\atguigu\springcloud\model\UserDto.class
+com\atguigu\springcloud\config\TokenConfig.class
+com\atguigu\springcloud\model\PermissionDto.class

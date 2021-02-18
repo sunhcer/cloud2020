@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.springcloud.dao.CompanyMapper">
+    
+    <resultMap type="com.atguigu.springcloud.vo.Company" id="CompanyResult">
+        <result property="id"    column="id"    />
+        <result property="username"    column="username"    />
+    </resultMap>
+
+    <resultMap type="com.atguigu.springcloud.vo.Company" id="CompanyTwoResult">
+        <result property="id"    column="id"    />
+        <result property="username"    column="username"    />
+        <collection property="departments" resultMap="DepartmentResult">
+        </collection>
+    </resultMap>
+    <resultMap type="com.atguigu.springcloud.vo.Department" id="DepartmentResult">
+        <result property="id"    column="did"    />
+        <result property="name"    column="name"    />
+        <result property="companyId"    column="company_id"    />
+    </resultMap>
+
+    <resultMap type="com.atguigu.springcloud.vo.Company" id="CompanyThreeResult">
+        <result property="id"    column="id"    />
+        <result property="username"    column="username"    />
+        <collection property="departments" resultMap="DepartmentTwoResult">
+        </collection>
+    </resultMap>
+
+    <resultMap type="com.atguigu.springcloud.vo.Department" id="DepartmentTwoResult">
+        <result property="id"    column="did"    />
+        <result property="name"    column="name"    />
+        <result property="companyId"    column="company_id"    />
+        <collection property="employees" resultMap="EmployeeResult"></collection>
+    </resultMap>
+
+    <resultMap type="com.atguigu.springcloud.vo.Employee" id="EmployeeResult">
+        <result property="id"    column="eid"    />
+        <result property="departmentId"    column="department_id"    />
+        <result property="username"    column="eusername"    />
+    </resultMap>
+
+    <sql id="selectCompanyVo">
+        select id, username from company
+    </sql>
+
+    <select id="selectCompanyList" parameterType="com.atguigu.springcloud.vo.Company" resultMap="CompanyResult">
+        <include refid="selectCompanyVo"/>
+        <where>  
+            <if test="username != null  and username != ''"> and username like concat('%', #{username}, '%')</if>
+
+        </where>
+    </select>
+    
+    <select id="selectCompanyById" parameterType="String" resultMap="CompanyResult">
+        <include refid="selectCompanyVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectTwoLevel" parameterType="String" resultMap="CompanyTwoResult">
+        select c.id as id ,d.id as did , c.username as username, d.name as name , d.company_id as company_id
+        from company c, department d
+        where c.id=d.company_id   and  c.id=#{id}
+    </select>
+    <select id="selectThreeLevel" parameterType="String" resultMap="CompanyThreeResult">
+        select c.id as id ,d.id as did , c.username as username, d.name as name , d.company_id as company_id,
+        e.id as eid ,e.department_id as department_id ,e.username as eusername
+        from company c left join department d on  c.id=d.company_id  left join  Employee e on e.department_id=d.id
+        where    c.id=#{id}
+    </select>
+
+<!--  selectNON   -->
+    <resultMap type="com.atguigu.springcloud.vo.Company" id="NONResult">
+        <result property="id"    column="id"    />
+        <result property="username"    column="username"    />
+        <collection property="departments" resultMap="NONDResult"></collection>
+        <collection property="roles" resultMap="NONRResult"></collection>
+    </resultMap>
+
+    <resultMap type="com.atguigu.springcloud.vo.Department" id="NONDResult">
+        <result property="id"    column="did"    />
+        <result property="name"    column="name"    />
+        <result property="companyId"    column="company_id"    />
+    </resultMap>
+    <resultMap type="com.atguigu.springcloud.vo.Role" id="NONRResult">
+        <result property="name"    column="rname"    />
+        <result property="companyId"    column="rcompany_id"    />
+    </resultMap>
+
+    <select id="selectNON" resultMap="NONResult">
+        select
+        c.id , c.username, d.id as did , d.name , d.company_id , r.name as rname , r.company_id as rcompany_id
+        from  company c left join department d  on c.id = d.company_id  left join role r on c.id=r.company_id
+        where c.id=#{id}
+    </select>
+
+
+    <insert id="insertCompany" parameterType="com.atguigu.springcloud.vo.Company">
+        <selectKey keyProperty="id" resultType="String" order="BEFORE">
+                   select uuid() from dual
+        </selectKey>
+        insert into company
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="username != null and username != ''">username,</if>
+
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="username != null and username != ''">#{username},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCompany" parameterType="com.atguigu.springcloud.vo.Company">
+        update company
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="username != null and username != ''">username = #{username},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCompanyById" parameterType="String">
+        delete from company where id = #{id}
+    </delete>
+
+    <delete id="deleteCompanyByIds" parameterType="String">
+        delete from company where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

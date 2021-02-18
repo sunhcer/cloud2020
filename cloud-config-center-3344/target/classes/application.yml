@@ -1,0 +1,34 @@
+server:
+  port: 3344
+spring:
+  application:
+    name: cloud-config-center
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/sunhcer/springcloud-config.git
+          search-paths:
+            - springcloud-config
+#          username: sunhcer
+#          password: lh173vd0
+#          force-pull: true
+      label: main
+#19527为后管端口,5672为访问端口
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka7002.com:7002/eureka/,http://eureka7001.com:7001/eureka/
+
+management:
+  endpoints: #暴露bus刷新配置的端点
+    web:
+      exposure:
+        include: bus-refresh
