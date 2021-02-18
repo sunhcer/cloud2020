@@ -33,6 +33,8 @@ public class MqReceiver {
     @RabbitListener(queuesToDeclare = @Queue(value = "hello",durable = "true"))
     public void process1(String message) {
         // @RabbitListener注解用于监听RabbitMQ，queues指定监听哪个队列
+
+
         log.info(message);
     }
 
