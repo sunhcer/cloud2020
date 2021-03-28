@@ -36,4 +36,19 @@ public class PaymentServiceImpl implements PaymentService {
         return list;
     }
 
+
+    @Override
+    public int updateCountry(StringBuilder stringBuilder) {
+        String substring = stringBuilder.toString().substring(0, stringBuilder.length()-1);
+        System.out.println("读取的值"+substring);
+        String[] split = substring.split(",");
+        for (int i = 0; i < split.length; i++) {
+            String countryNameNew = split[i];
+            String[] split1 = countryNameNew.split("\\|");
+            String itemNo = split1[0];
+            String countrynameOld = split1[1];
+            paymentDao.updateCountry(itemNo,countryNameNew,countrynameOld);
+        }
+        return 0;
+    }
 }

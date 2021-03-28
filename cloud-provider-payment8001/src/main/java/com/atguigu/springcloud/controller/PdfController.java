@@ -3,6 +3,7 @@ package com.atguigu.springcloud.controller;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import com.atguigu.springcloud.service.PaymentService;
 import io.github.jonathanlink.PDFLayoutTextStripper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.cli.CommandLine;
@@ -12,14 +13,13 @@ import org.apache.pdfbox.io.RandomAccessFile;
 import org.apache.pdfbox.pdfparser.PDFParser;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import technology.tabula.CommandLineApp;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 
 /**
  * pdf转csv,再读取csv文件
@@ -30,6 +30,9 @@ import java.io.IOException;
 @RequestMapping("/pdfParse")
 @Slf4j
 public class PdfController {
+
+    @Autowired
+    private PaymentService paymentService;
 //    tabula解析表格,有几个问题: 1.换行读成多个cell 2:当其中一列的内容很长,会被挤到前面一个格子里面,前面一个格子也有这种情况
     @GetMapping("/csvParse")
     public void parsePDF(){
@@ -37,13 +40,19 @@ public class PdfController {
         String filePath = "E:/TaxSaaS/upload/2021/03/26/202103261726111895072263.pdf";
         //获取pdf的所有填报的表格信息
         JSONArray jsonArray1 = returnPdfEntityList(filePath);
-        JSONArray array = (JSONArray) jsonArray1.get(22);
-        JSONArray array1 = (JSONArray) array.get(17);
+        JSONArray array = (JSONArray) jsonArray1.get(23);
+        System.out.println(array.toString());
+        JSONArray array1 = (JSONArray) array.get(8);
         JSONObject o = (JSONObject)array1.get(2);
         Object text = o.get("text");
         System.out.println("=========================================="+text.toString());
+        System.out.println(array1.get(3).toString());
+        System.out.println(array1.get(4).toString());
 
     }
+
+
+
 
     //不行的,tabula 生成的csv文件还是会挤在一起
     @GetMapping("/pdf2Csv")
@@ -80,7 +89,7 @@ public class PdfController {
 
 
     public JSONArray returnPdfEntityList(String filePath) {
-        String[] args = new String[]{"-f=JSON", "-p=all", filePath};
+        String[] args = new String[]{"-f=JSON", "-p=all","-l", filePath};
         JSONArray data=new JSONArray();
         try {
             //解析pdf当中的所有表格信息
@@ -105,6 +114,28 @@ public class PdfController {
             e.printStackTrace();
         }
         return data;
+    }
+// 按行读取txt,然后更新国家名称和编码
+    @GetMapping("/changecountry")
+    public void changecountry() throws IOException {
+        //BufferedReader是可以按行读取文件
+        FileInputStream inputStream = new FileInputStream("d://co.txt");
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+
+        String str = null;
+        StringBuilder stringBuilder = new StringBuilder();
+        while((str = bufferedReader.readLine()) != null)
+        {
+            System.out.println(str);
+            stringBuilder.append(str).append(",");
+        }
+        int num=paymentService.updateCountry(stringBuilder);
+
+        //close
+        inputStream.close();
+        bufferedReader.close();
+
+
     }
 
 }

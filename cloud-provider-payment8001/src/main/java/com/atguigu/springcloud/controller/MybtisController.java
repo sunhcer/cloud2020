@@ -51,4 +51,7 @@ public class MybtisController {
         List<Company> companies=iCompanyService.selectNON(id);
         return CommonResult.succ(companies);
     }
+
+
+
 }

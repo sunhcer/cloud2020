@@ -13,4 +13,6 @@ public interface PaymentDao {
     public Payment getPaymentById(@Param("id")Long id);
 
     List<Payment> findAllPayment();
+
+    void updateCountry(@Param("itemNo") String itemNo, @Param("countryNameNew") String countryNameNew, @Param("countrynameOld") String countrynameOld);
 }

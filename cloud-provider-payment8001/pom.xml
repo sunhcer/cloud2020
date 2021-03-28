@@ -117,6 +117,19 @@
             <version>4.1.4</version>
         </dependency>
 
+        <!-- tabula pdf导入 -->
+        <dependency>
+            <groupId>technology.tabula</groupId>
+            <artifactId>tabula</artifactId>
+            <version>1.0.4</version>
+        </dependency>
+
+<!--       PDFLayoutTextStripper pdf转换成同格式的text -->
+        <dependency>
+            <groupId>io.github.jonathanlink</groupId>
+            <artifactId>PDFLayoutTextStripper</artifactId>
+            <version>2.2.3</version>
+        </dependency>
 
 <!--        mybatis日志包-->
         <dependency>
