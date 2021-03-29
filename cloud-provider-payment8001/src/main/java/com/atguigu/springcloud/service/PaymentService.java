@@ -11,4 +11,14 @@ public interface PaymentService {
     public List<Payment> getPaymentList(@Param("pageNum")int pageNum, @Param("pageSize")int pageSize);
 
     int updateCountry(StringBuilder stringBuilder);
+
+    int updateCertificate(StringBuilder stringBuilder);
+
+    int changeCoin(StringBuilder stringBuilder);
+
+    int sortCountry(StringBuilder stringBuilder);
+
+    int sortCertificate(StringBuilder stringBuilder);
+
+    int changeAndSortExchange(StringBuilder stringBuilder);
 }

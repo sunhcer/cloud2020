@@ -26,4 +26,32 @@
         where code_no='TP_Nationality_2' and item_name=#{countrynameOld}
     </update>
 
+<!--    sortCountry-->
+    <update id="sortCountry" >
+        update code_libaray set sort_no=#{sortNo}
+        where code_no='TP_Nationality_2' and item_name=#{countryNameNew}
+    </update>
+
+<!--    updateCertificate-->
+    <update id="updateCertificate" parameterType="java.lang.String">
+        update code_libaray set item_no=#{itemNoNeed},code_no='TP_DocumentType_2'
+        where code_no=#{type} and item_name=#{certificateNameNeed}
+    </update>
+
+<!--    sortCertificate-->
+    <update id="sortCertificate" >
+        update code_libaray set sort_no=#{sortNo}
+        where code_no='TP_DocumentType_2' and item_name=#{certificateNameNeed}
+    </update>
+<!--   updateCoin -->
+    <update id="updateCoin" >
+        update code_libaray set item_no=#{itemNoNeed},code_no='TP_currencyCode_2',sort_no=#{sortNo}
+        where code_no=#{type} and item_name=#{coinNameNeed}
+    </update>
+
+<!--    updateExchange-->
+    <update id="updateExchange" >
+        update code_libaray set item_no=#{itemNoNeed},code_no='TP_ListedExchange_2',sort_no=#{sortNo}
+        where code_no=#{type} and item_name=#{coinNameNeed}
+    </update>
 </mapper>

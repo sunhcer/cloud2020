@@ -3,6 +3,8 @@ package com.atguigu.springcloud.mode.observer.myobserver;
 import java.util.Observable;
 import java.util.Observer;
 
+import static java.lang.Thread.sleep;
+
 /**
  * 
  * @author sunhcer.shi
@@ -23,7 +25,7 @@ public class Person implements Observer {
         System.out.println("用户:"+name+ " 得到了wechat的推送: "+arg);
         try {
             System.out.println("用户:"+name+"得到推送的时候卡两秒");
-            this.wait(2000);
+            sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

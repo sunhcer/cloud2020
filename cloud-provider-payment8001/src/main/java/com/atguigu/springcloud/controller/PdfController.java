@@ -16,6 +16,7 @@ import org.apache.pdfbox.text.PDFTextStripper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import technology.tabula.CommandLineApp;
 
@@ -50,8 +51,6 @@ public class PdfController {
         System.out.println(array1.get(4).toString());
 
     }
-
-
 
 
     //不行的,tabula 生成的csv文件还是会挤在一起
@@ -89,6 +88,7 @@ public class PdfController {
 
 
     public JSONArray returnPdfEntityList(String filePath) {
+        // 增加了-l之后可以让他 黏在一起的值分开
         String[] args = new String[]{"-f=JSON", "-p=all","-l", filePath};
         JSONArray data=new JSONArray();
         try {
@@ -116,10 +116,45 @@ public class PdfController {
         return data;
     }
 // 按行读取txt,然后更新国家名称和编码
-    @GetMapping("/changecountry")
-    public void changecountry() throws IOException {
+    @GetMapping("/changeTxt")
+    public void changecountry(@RequestParam String type) throws IOException {
         //BufferedReader是可以按行读取文件
-        FileInputStream inputStream = new FileInputStream("d://co.txt");
+        switch (type){
+            case "0":
+                //改变国家编码
+                changeCountry();
+                break;
+            case "01":
+                //国家按照excel排序
+                sortCountry();
+                break;
+            case "1":
+                //改证件类型
+                changeCertificate();
+                break;
+            case "11":
+                //证件类型按照execl排序
+                sortCertificate();
+                break;
+            case "2":
+                //修改币种--并且排序
+                changeCoin();
+                break;
+            case "3":
+                //修改交易所 + 排序
+                changeAndSortExchange();
+        }
+
+    }
+
+    private void changeAndSortExchange() throws IOException {
+        FileInputStream inputStream = new FileInputStream("d://exchange.txt");
+        StringBuilder stringBuilder=parseTextFile("d://exchange.txt");
+        int num=paymentService.changeAndSortExchange(stringBuilder);
+    }
+
+    private StringBuilder parseTextFile(String filePath) throws IOException {
+        FileInputStream inputStream = new FileInputStream(filePath);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 
         String str = null;
@@ -129,13 +164,35 @@ public class PdfController {
             System.out.println(str);
             stringBuilder.append(str).append(",");
         }
-        int num=paymentService.updateCountry(stringBuilder);
-
         //close
         inputStream.close();
         bufferedReader.close();
-
-
+        return stringBuilder;
     }
 
+    private void sortCertificate() throws IOException {
+        StringBuilder stringBuilder = parseTextFile("d://certificate.txt");
+        int num=paymentService.sortCertificate(stringBuilder);
+    }
+
+    private void sortCountry() throws IOException {
+        StringBuilder stringBuilder = parseTextFile("d://co.txt");
+        int num=paymentService.sortCountry(stringBuilder);
+    }
+
+    private void changeCoin() throws IOException {
+        StringBuilder stringBuilder = parseTextFile("d://rmb.txt");
+        int num=paymentService.changeCoin(stringBuilder);
+    }
+
+
+    private void changeCertificate() throws IOException {
+        StringBuilder stringBuilder = parseTextFile("d://certificate.txt");
+        int num=paymentService.updateCertificate(stringBuilder);
+    }
+
+    private void changeCountry() throws IOException {
+        StringBuilder stringBuilder = parseTextFile("d://co.txt");
+        int num=paymentService.updateCountry(stringBuilder);
+    }
 }
