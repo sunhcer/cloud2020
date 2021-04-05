@@ -5,9 +5,7 @@ import com.atguigu.springcloud.entities.CommonResult;
 import com.atguigu.springcloud.entities.NotNullVo;
 import com.atguigu.springcloud.entities.Payment;
 import com.atguigu.springcloud.service.PaymentService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.Redisson;
 import org.redisson.api.RLock;
@@ -48,10 +46,39 @@ public class PaymentController {
     @Autowired
     private Redisson redisson;
 
+    // 测试
+    @ResponseBody
+    @GetMapping("payment/swagger")
+    @ApiOperation(value="swagger接口",notes = "swaggernote")
+    @ControllerWebLog(name="测试日志")
+    @ApiResponses({
+            @ApiResponse(code = 200,message = "返回字段注释",response =Payment.class ),
+    })
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "entId",value="企业id",dataType = "String",paramType = "query",required = true),
+            @ApiImplicitParam(name = "taxYear",value = "所属年份",dataType = "String",paramType = "query",required = true)
+    })
+    public CommonResult testSwagger(String entId,String taxYear){
+        Payment payment = new Payment();
+        payment.setId(23L);
+        payment.setSerial("阿卡军事大国");
+        return CommonResult.succ(payment);
+    }
+
+    /**
+     * 
+     * @author sunhcer.shi
+     * @date 2021/03/16 18:58
+     * @param payment 
+     * @return com.atguigu.springcloud.entities.CommonResult 
+     */
     @PostMapping("payment/create")
     @ControllerWebLog(name="创建订单")
     @ApiOperation("创建订单")
     public CommonResult create(@ApiParam("订单对象") @RequestBody Payment payment){
+        log.info("测试热部署-------");
+        String test = stringRedisTemplate.opsForValue().get("test");
+        log.info("获取缓存key：test 结果："+test);
         int result=paymentService.create(payment);
         log.info("---------------新增订单---------------");
         return CommonResult.succ("操作成功"+result+serverPort);
@@ -63,7 +90,6 @@ public class PaymentController {
             Payment payment=paymentService.getPaymentById(id);
             log.info("第"+i+"次执行结果:"+payment.toString());
         }
-
 //        return CommonResult.succ(""+payment+serverPort);
         return CommonResult.succ(""+serverPort);
     }

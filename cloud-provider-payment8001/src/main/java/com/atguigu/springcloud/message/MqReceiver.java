@@ -27,15 +27,14 @@ public class MqReceiver {
         log.info(message);
     }
 
-    /** 2021/02/17 22:38:28 框架注释
+    /**  22:38:28 框架注释
+     *  直连模式
      *  持久化等属性都在@Queue注解里面
      */
     @RabbitListener(queuesToDeclare = @Queue(value = "hello",durable = "true"))
     public void process1(String message) {
         // @RabbitListener注解用于监听RabbitMQ，queues指定监听哪个队列
-
-
-        log.info(message);
+        log.info("直连模式---接收 "+message);
     }
 
     /** 2021/02/17 22:48:10 框架注释

@@ -13,4 +13,16 @@ public interface PaymentDao {
     public Payment getPaymentById(@Param("id")Long id);
 
     List<Payment> findAllPayment();
+
+    void updateCountry(@Param("itemNo") String itemNo, @Param("countryNameNew") String countryNameNew, @Param("countrynameOld") String countrynameOld);
+
+    int updateCertificate(@Param("itemNoNeed") String itemNoNeed,@Param("certificateNameNeed") String certificateNameNeed,@Param("type") String type);
+
+    int updateCoin(@Param("itemNoNeed") String itemNoNeed, @Param("coinNameNeed") String coinNameNeed, @Param("type") String type,@Param("sortNo") Integer sortNo);
+
+    int sortCountry(@Param("itemNo") String itemNo,@Param("countryNameNew") String countryNameNew,@Param("sortNo") Integer sortNo);
+
+    int sortCertificate(@Param("itemNoNeed") String itemNoNeed,@Param("certificateNameNeed") String certificateNameNeed, @Param("sortNo")Integer sortNo);
+
+    int updateExchange(@Param("itemNoNeed") String itemNoNeed,@Param("coinNameNeed") String coinNameNeed,@Param("type") String type,@Param("sortNo") Integer sortNo);
 }

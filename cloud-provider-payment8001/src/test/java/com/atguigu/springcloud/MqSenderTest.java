@@ -11,7 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 /**
  * mq发送测试类
  * @author sunhcer
- * @date 2021/02/17 16:56
+ * @date  16:56
  **/
 
 @RunWith(SpringRunner.class)
@@ -24,7 +24,7 @@ public class MqSenderTest {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
-    /** 2021/02/17 22:43:59 框架注释
+    /**  22:43:59 框架注释
      *  直连队列模式
      */
     @Test
@@ -36,7 +36,7 @@ public class MqSenderTest {
     }
 
 
-    /** 2021/02/17 22:44:18 框架注释
+    /**  22:44:18 框架注释
      *  工作队列模式 生产者
      *  指定队列,但是消息可以轮询给不同的实例(消费者),每个消息只能被消费一次
      */
@@ -47,7 +47,7 @@ public class MqSenderTest {
         }
     }
 
-    /** 2021/02/17 23:00:03 框架注释
+    /**  23:00:03 框架注释
      *  发布订阅 fanout 广播模式 生产者
      *  指定交换机,广播给每一个消费者,每条消息会被多次消费
      */
@@ -58,7 +58,7 @@ public class MqSenderTest {
         }
     }
 
-    /** 2021/02/17 23:45:49 框架注释
+    /**  23:45:49 框架注释
      *  路由模式 route
      *  在广播模式的基础上多了一个routingkey
      */
@@ -84,4 +84,5 @@ public class MqSenderTest {
 
     }
 
+    //修改
 }
