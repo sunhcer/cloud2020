@@ -82,6 +82,7 @@ public class L322_coins {
             return;
         }
 
+
         recursion(amount,amountTarget-1);
 
         recursion(amount,amountTarget-2);

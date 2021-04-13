@@ -94,6 +94,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         from  company c left join department d  on c.id = d.company_id  left join role r on c.id=r.company_id
         where c.id=#{id}
     </select>
+    <select id="selectBatch" resultType="com.atguigu.springcloud.entities.Payment">
+        select id,serial from payment where serial=#{serino}
+    </select>
 
 
     <insert id="insertCompany" parameterType="com.atguigu.springcloud.vo.Company">
@@ -118,6 +121,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="username != null and username != ''">username = #{username},</if>
         </trim>
         where id = #{id}
+    </update>
+    <update id="batchUpdate" >
+
+        <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+            update payment
+            <set>
+                serial='454545'
+            </set>
+            where  id= #{item.id}
+        </foreach>
+
     </update>
 
     <delete id="deleteCompanyById" parameterType="String">

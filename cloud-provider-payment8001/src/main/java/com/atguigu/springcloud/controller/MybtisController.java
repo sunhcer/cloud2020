@@ -52,6 +52,11 @@ public class MybtisController {
         return CommonResult.succ(companies);
     }
 
+    @GetMapping("payment/batchUpdate")
+    public CommonResult batchUpdate(@RequestParam String serino){
+        int updateNum=iCompanyService.batchUpdate(serino);
+        return CommonResult.succ(updateNum);
+    }
 
 
 }

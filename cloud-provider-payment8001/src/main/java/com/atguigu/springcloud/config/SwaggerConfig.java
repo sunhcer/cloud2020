@@ -35,7 +35,7 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfo(
-                "Spring Boot 项目集成 Swagger 实例文档",
+                "Spring cloud 项目集成 Swagger 实例文档",
                 "简单swagger",
                 "API V1.0",
                 "Terms of service",
