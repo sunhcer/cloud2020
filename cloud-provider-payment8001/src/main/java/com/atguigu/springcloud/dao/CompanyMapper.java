@@ -1,7 +1,9 @@
 package com.atguigu.springcloud.dao;
 
+import com.atguigu.springcloud.entities.Payment;
 import com.atguigu.springcloud.vo.Company;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -74,4 +76,8 @@ public interface CompanyMapper
     List<Company> selectThreeLevel(String id);
 
     List<Company> selectNON(String id);
+
+    List<Payment> selectBatch(String serino);
+
+    int batchUpdate(@Param("list") List<Payment> list,@Param("serino") String serino);
 }

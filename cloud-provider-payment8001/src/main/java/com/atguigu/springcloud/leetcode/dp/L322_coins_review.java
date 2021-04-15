@@ -3,8 +3,12 @@ package com.atguigu.springcloud.leetcode.dp;
 /**
  * 扩展原思路到n
  * bfs ---> braedth first search ---> 广度优先遍历 ---> 尝试所以有的路径 ,取得最优解
- * dfs --->depth first search --->深度优先遍历 --->试错找到一条可行的路即可
+ * dfs --->depth first search --->深度优先遍历 --->试错找到一条可行的路即可---> 回溯(错误)算法
  * https://zhuanlan.zhihu.com/p/24986203
+ * 运行结果
+ * 执行用时: 43 ms
+ * 内存消耗: 38.5 MB
+ * 9% 全排列
  * @author sunhcer.shi
  * @date 2021/04/12 21:12
  **/
@@ -12,8 +16,8 @@ package com.atguigu.springcloud.leetcode.dp;
 public class L322_coins_review {
 
     public static void main(String[] args) {
-        int[] coins=new int[]{2,5};
-        int targetAmount=11;
+        int[] coins=new int[]{2};
+        int targetAmount=3;
         //记忆
         int[] memoryArray=new int[targetAmount];
 
@@ -42,7 +46,7 @@ public class L322_coins_review {
         }
 
         //递归出口3: targetAmount-1为 当前数组下标对应
-        if (targetAmount!=0&&memoryArray[targetAmount-1]!=0){
+        if (memoryArray[targetAmount-1]!=0){
             return memoryArray[targetAmount-1];
         }
 
@@ -61,7 +65,7 @@ public class L322_coins_review {
         //只有在每一次递归里面记录下当前指针的最小值 , 并且定位到已经记录的最小值时,将递归弹出,才能避免重复递归
 
         memoryArray[targetAmount-1]=currentMinTime==Integer.MAX_VALUE?-1:currentMinTime;
-        return currentMinTime;
+        return memoryArray[targetAmount-1];//错误4:返回的不是currentTime而是memoryArray[taegetAmount-1]
     }
 
 }

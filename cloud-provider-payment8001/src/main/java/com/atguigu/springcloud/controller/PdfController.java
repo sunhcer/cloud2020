@@ -3,6 +3,9 @@ package com.atguigu.springcloud.controller;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import com.atguigu.springcloud.constant.CommonConstant;
+import com.atguigu.springcloud.entities.CommonResult;
+import com.atguigu.springcloud.mode.strategy.strategyfactory.Context;
 import com.atguigu.springcloud.service.PaymentService;
 import io.github.jonathanlink.PDFLayoutTextStripper;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +38,20 @@ public class PdfController {
     @Autowired
     private PaymentService paymentService;
 //    tabula解析表格,有几个问题: 1.换行读成多个cell 2:当其中一列的内容很长,会被挤到前面一个格子里面,前面一个格子也有这种情况
+
+    @Autowired
+    private Context context;
+
+    @GetMapping("/strategy")
+    public CommonResult getStrategy(){
+
+        context.doAnything(CommonConstant.TYPE_01);
+        return CommonResult.succ(CommonConstant.TYPE_01);
+    }
+
+
+
+
     @GetMapping("/csvParse")
     public void parsePDF(){
         //解密文件路径
@@ -318,5 +335,7 @@ public class PdfController {
         StringBuilder stringBuilder = parseTextFile("d://co.txt");
         int num=paymentService.updateCountry(stringBuilder);
     }
+
+
 
 }
