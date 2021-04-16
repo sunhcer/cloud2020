@@ -247,23 +247,23 @@ public class PaymentServiceImpl implements PaymentService {
             String itemNo = split1[0];
 
             String likeItemNo=split1[0];
-            if (likeItemNo.startsWith("0")){
-                likeItemNo=likeItemNo.substring(1);
-            }
+//            if (likeItemNo.startsWith("0")){
+//                likeItemNo=likeItemNo.substring(1);
+//            }
 
 
             //根据 itemName和 hmcodeNo找到 item_no
-            CodeLibrary codeLibrary=paymentDao.queryCodeLibrary2(hmCodeNo,likeItemNo,itemName);
+//            CodeLibrary codeLibrary=paymentDao.queryCodeLibrary2(hmCodeNo,likeItemNo,itemName);
             EntCodeMappingEntity entCodeMappingEntity = new EntCodeMappingEntity();
-            log.info("第"+i+"条:"+ "hmcode:"+hmCodeNo+ "itemname:"+itemName +"itemNo:"+itemNo+" 查询结果:"+JSONUtil.toJsonStr(codeLibrary));
-            if(codeLibrary==null){
-                log.error("名字未匹配到 , 跳过: "+ "第"+i+"条:"+ "hmcode:"+hmCodeNo+ "itemname:"+itemName +"itemNo:"+itemNo+" 查询结果:"+JSONUtil.toJsonStr(codeLibrary));
-                continue;
-            }
+//            log.info("第"+i+"条:"+ "hmcode:"+hmCodeNo+ "itemname:"+itemName +"itemNo:"+itemNo+" 查询结果:"+JSONUtil.toJsonStr(codeLibrary));
+//            if(codeLibrary==null){
+//                log.error("名字未匹配到 , 跳过: "+ "第"+i+"条:"+ "hmcode:"+hmCodeNo+ "itemname:"+itemName +"itemNo:"+itemNo+" 查询结果:"+JSONUtil.toJsonStr(codeLibrary));
+//                continue;
+//            }
 
             entCodeMappingEntity.setCityCode("4400");//广东
             entCodeMappingEntity.setHmCodeNo(hmCodeNo);
-            entCodeMappingEntity.setHmItemNo(codeLibrary.getItemNo());
+            entCodeMappingEntity.setHmItemNo(itemNo);
             entCodeMappingEntity.setCreateTime(DateUtil.formatDateTime(new Date()));
             entCodeMappingEntity.setDeclareMethod("1");//网页
             entCodeMappingEntity.setItemName(itemName);

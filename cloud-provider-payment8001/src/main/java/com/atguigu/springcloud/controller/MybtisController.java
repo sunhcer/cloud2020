@@ -1,6 +1,7 @@
 package com.atguigu.springcloud.controller;
 
 import com.atguigu.springcloud.annotation.ControllerWebLog;
+import com.atguigu.springcloud.annotation.MemoryCaculateLog;
 import com.atguigu.springcloud.entities.CommonResult;
 import com.atguigu.springcloud.service.ICompanyService;
 import com.atguigu.springcloud.vo.Company;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * mybatis测试
@@ -58,5 +60,13 @@ public class MybtisController {
         return CommonResult.succ(updateNum);
     }
 
-
+    @GetMapping("payment/memoryCost")
+    @MemoryCaculateLog(name="内存计算")
+    public CommonResult memoryCost(@RequestParam int num){
+        Integer integer = Optional.ofNullable(num).orElse(1);
+        for (int i = 0; i <integer ; i++) {
+            System.out.println(i);
+        }
+        return CommonResult.succ("成功");
+    }
 }

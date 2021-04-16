@@ -212,7 +212,7 @@ public class PdfController {
                 addGDTPcoinsForMapping();
                 break;
             case "14":
-                //mapping 广东 gd_tp_industry 币种
+                //mapping 广东 gd_tp_industry 国民经济行业
                 addGDTPIndustryForMapping();
                 break;
         }
