@@ -66,4 +66,6 @@ public interface ICompanyService
     List<Company> selectThreeLevel(String id);
 
     List<Company> selectNON(String id);
+
+    int batchUpdate(String serino);
 }

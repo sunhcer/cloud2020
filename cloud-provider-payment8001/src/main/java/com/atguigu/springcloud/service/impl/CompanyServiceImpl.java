@@ -3,10 +3,12 @@ package com.atguigu.springcloud.service.impl;
 import java.util.List;
 
 import com.atguigu.springcloud.dao.CompanyMapper;
+import com.atguigu.springcloud.entities.Payment;
 import com.atguigu.springcloud.service.ICompanyService;
 import com.atguigu.springcloud.vo.Company;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 企业Service业务层处理
@@ -103,7 +105,21 @@ public class CompanyServiceImpl implements ICompanyService
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public List<Company> selectNON(String id) {
         return companyMapper.selectNON(id);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int batchUpdate(String serino) {
+        List<Payment> list= companyMapper.selectBatch(serino);
+        //普通批量 -- 更新
+        //这里调mybatis的批处理,成功时返回回来的条数是1 ,需要注意
+        int updateNum=companyMapper.batchUpdate(list,serino);
+        //case when
+        System.out.println("更新条数:"+updateNum);
+        //switch
+        return 0;
     }
 }
