@@ -1,6 +1,7 @@
 package com.atguigu.springcloud;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.RandomUtil;
 import cn.hutool.json.JSONUtil;
 import com.atguigu.springcloud.entities.Payment;
 import com.google.inject.internal.cglib.core.$LocalVariablesSorter;
@@ -110,14 +111,42 @@ public class StreamTest {
         AtomicIntegerArray atomicIntegerArray = new AtomicIntegerArray(10);
         hmPaymentList.stream().forEach(targetMap->
         {
-
             int i1 = atomicIntegerArray.get(indexAtomicInteger.intValue());
             ints[indexAtomicInteger.intValue()]=1;
             Arrays.stream(ints).forEach(item-> System.out.print(" "+item));
             System.out.println();
             System.out.println(indexAtomicInteger.getAndIncrement());
         });
+    }
 
+    @Test
+    public  void test6(){
+        ArrayList<Object> objects = new ArrayList<>();
+        objects.stream()
+                .map(o -> o.toString())
+                .forEach(System.out::print);
+    }
+
+    @Test
+    public void testMap(){
+        Payment p1 = new Payment(1L, "序列号1", "35");
+        Payment p2 = new Payment(1L, "序列号1", "35");
+        Payment p3 = new Payment(3L, "序列号1", "35");
+        Payment p4 = new Payment(4L, "序列号1", "35");
+        List<Payment> payments = Arrays.asList(p1, p2, p3, p4);
+
+        payments.stream()
+                .map(Payment::getId)
+                .collect(Collectors.toList());
+
+//        payments.stream()
+//                .collect(Collectors.toMap((UUID::randomUUID)::toString,Payment::getId));
+        //为什么不能连续使用方法引用?
 
     }
+
+    private String get(UUID uuid){
+        return "";
+    }
+
 }
