@@ -2,6 +2,7 @@ package com.atguigu.springcloud;
 
 import com.atguigu.springcloud.dao.UserMapper;
 import com.atguigu.springcloud.entities.User;
+import com.atguigu.springcloud.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,9 @@ public class MybatisPlusApplicationTests {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private UserService userService;
+
     @Test
     public void contextLoads() {
 // 参数是一个 Wrapper ，条件构造器，这里我们先不用 null
@@ -25,5 +29,8 @@ public class MybatisPlusApplicationTests {
         System.out.println("user = " + user);
         List<User> users = userMapper.selectList(null);
         users.forEach(System.out::println);
+
+        User byId = userService.getById(1);
+        System.out.println("byId = " + byId);
     }
 }
