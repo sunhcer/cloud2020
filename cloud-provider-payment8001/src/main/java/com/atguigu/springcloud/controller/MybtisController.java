@@ -3,8 +3,13 @@ package com.atguigu.springcloud.controller;
 import com.atguigu.springcloud.annotation.ControllerWebLog;
 import com.atguigu.springcloud.annotation.MemoryCaculateLog;
 import com.atguigu.springcloud.entities.CommonResult;
+import com.atguigu.springcloud.entities.User;
 import com.atguigu.springcloud.service.ICompanyService;
+import com.atguigu.springcloud.service.UserService;
 import com.atguigu.springcloud.vo.Company;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -31,6 +36,8 @@ public class MybtisController {
     @Qualifier
     private ICompanyService iCompanyService;
 
+    @Autowired
+    private UserService userService;
 
     @GetMapping("payment/selectTwoLevel/{id}")
     @ControllerWebLog(name="测试2层嵌套")
@@ -70,4 +77,21 @@ public class MybtisController {
         }
         return CommonResult.succ("成功");
     }
+
+
+    /**
+     * 和mybatisplus冲突,需要加配置类paginationInterceptor
+     * @param pageSize
+     * @param pageNum
+     * @return
+     */
+    @GetMapping("payment/page")
+    @MemoryCaculateLog
+    public CommonResult getpage(@RequestParam int pageSize,@RequestParam int pageNum){
+        PageHelper.startPage(pageNum,pageSize);
+        List<User> list = userService.list(new QueryWrapper<User>().lambda().ne(User::getId,1111L));
+        PageInfo<User> userPageInfo = new PageInfo<>(list);
+        return CommonResult.succ(userPageInfo);
+    }
+
 }
