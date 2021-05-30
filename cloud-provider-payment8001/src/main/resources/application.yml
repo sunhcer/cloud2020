@@ -13,7 +13,7 @@ spring:
     url: jdbc:mysql://localhost:3306/db2019?useUnicode=true&characterEncoding=utf-8&useSSL=false
     username: root
     password: mysql1234
-#    redis单机配置
+  #    redis单机配置
   redis:
     host: localhost
     port: 6379  #可不配，因为底层默认值为6379
@@ -49,7 +49,7 @@ eureka:
     register-with-eureka: true
     fetchRegistry: true
     service-url:
-#      defaultZone: http://localhost:7001/eureka
+      #      defaultZone: http://localhost:7001/eureka
       defaultZone: http://eureka7002.com:7002/eureka/,http://eureka7001.com:7001/eureka/
   instance:
     instance-id: payment8001 #修改服务集群下的主机名
@@ -59,3 +59,29 @@ mybatis:
   config-location: classpath:mybatis-config.xml
   mapperLocations: classpath:mapper/*.xml
   type-aliases-package: com.atguigu.springcloud.entities
+
+mybatis-plus:
+  #  config-location: classpath:mybatis-config.xml
+  #  mapperLocations: classpath:mapper/*.xml
+  #  type-aliases-package: com.atguigu.springcloud.entities
+  global-config:
+    db-config:
+      #逻辑删除 全局字段名 添加之后不用添加@TableLogic
+      logic-delete-field: deleted
+      #逻辑删除,未删除的字段值 1
+      logic-not-delete-value: 1
+      #逻辑删除,已删除的字段值 0
+      logic-delete-value: 0
+
+xxl:
+  job:
+    accessToken:
+    admin:
+      addresses: http://127.0.0.1:8888/xxl-job-admin
+    executor:
+      address:
+      appname: xxl-job-executor-sample
+      ip:
+      logpath: /data/applogs/xxl-job/jobhandler
+      logretentiondays: 30
+      port: 9999

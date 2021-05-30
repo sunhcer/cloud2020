@@ -35,8 +35,8 @@ import java.io.*;
 @Slf4j
 public class PdfController {
 
-    @Autowired
-    private PaymentService paymentService;
+//    @Autowired
+//    private PaymentService paymentService;
 //    tabula解析表格,有几个问题: 1.换行读成多个cell 2:当其中一列的内容很长,会被挤到前面一个格子里面,前面一个格子也有这种情况
 
     @Autowired
@@ -137,161 +137,161 @@ public class PdfController {
     public void changecountry(@RequestParam String type,@RequestParam(required = false) String codeNo) throws IOException {
         //BufferedReader是可以按行读取文件
         switch (type){
-            case "0":
-                //改变国家编码
-                changeCountry();
-                break;
-            case "01":
-                //国家按照excel排序
-                sortCountry();
-                break;
-            case "02":
-                //增加国家英文
-                addCountryEng();
-                break;
-            case "1":
-                //改证件类型
-                changeCertificate();
-                break;
-            case "11":
-                //证件类型按照execl排序
-                sortCertificate();
-                break;
-            case "2":
-                //修改币种--并且排序
-                changeCoin();
-                break;
-            case "3":
-                //修改交易所 + 排序
-                changeAndSortExchange();
-                break;
-            case "4":
-                //mapping 表增加映射国家
-                changeContryForMapping();
-                break;
-            case "5":
-                //mapping 根据需要的字典类别 导入原来的
-                changeCodeNoForMapping(codeNo);
-                break;
-            case "6":
-                //mapping 国民经济行业
-                changeIndustryForMapping();
-                break;
-            case "61":
-                //mapping 国民经济行业 广东 cit
-                changeGDCITIndustryForMapping();
-                break;
-            case "7":
-                //mapping 补充华盟name
-                addNameForMapping();
-                break;
-            case "8":
-                //mapping 补充 国家
-                supplementNameForMapping();
-                break;
-            case "9":
-                //mapping 广东 国家 tp
-                addGDCountryForMapping();
-                break;
-            case "10":
-                //mapping 广东 国家 CIT
-                addGDCITCountryForMapping();
-                break;
-            case "111":
-                //mapping 广东 股东信息证件类型 CIT
-                addGDCITCertifyForMapping();
-                break;
-            case "12":
-                //mapping 广东 国家 CIT 补充华盟缺少的一部分
-                addGDCITCountryDiffForMapping();
-                break;
-
-
-            case "13":
-                //mapping 广东 gd_tp_coins 币种
-                addGDTPcoinsForMapping();
-                break;
-            case "14":
-                //mapping 广东 gd_tp_industry 国民经济行业
-                addGDTPIndustryForMapping();
-                break;
+//            case "0":
+//                //改变国家编码
+//                changeCountry();
+//                break;
+//            case "01":
+//                //国家按照excel排序
+//                sortCountry();
+//                break;
+//            case "02":
+//                //增加国家英文
+//                addCountryEng();
+//                break;
+//            case "1":
+//                //改证件类型
+//                changeCertificate();
+//                break;
+//            case "11":
+//                //证件类型按照execl排序
+//                sortCertificate();
+//                break;
+//            case "2":
+//                //修改币种--并且排序
+//                changeCoin();
+//                break;
+//            case "3":
+//                //修改交易所 + 排序
+//                changeAndSortExchange();
+//                break;
+//            case "4":
+//                //mapping 表增加映射国家
+//                changeContryForMapping();
+//                break;
+//            case "5":
+//                //mapping 根据需要的字典类别 导入原来的
+//                changeCodeNoForMapping(codeNo);
+//                break;
+//            case "6":
+//                //mapping 国民经济行业
+//                changeIndustryForMapping();
+//                break;
+//            case "61":
+//                //mapping 国民经济行业 广东 cit
+//                changeGDCITIndustryForMapping();
+//                break;
+//            case "7":
+//                //mapping 补充华盟name
+//                addNameForMapping();
+//                break;
+//            case "8":
+//                //mapping 补充 国家
+//                supplementNameForMapping();
+//                break;
+//            case "9":
+//                //mapping 广东 国家 tp
+//                addGDCountryForMapping();
+//                break;
+//            case "10":
+//                //mapping 广东 国家 CIT
+//                addGDCITCountryForMapping();
+//                break;
+//            case "111":
+//                //mapping 广东 股东信息证件类型 CIT
+//                addGDCITCertifyForMapping();
+//                break;
+//            case "12":
+//                //mapping 广东 国家 CIT 补充华盟缺少的一部分
+//                addGDCITCountryDiffForMapping();
+//                break;
+//
+//
+//            case "13":
+//                //mapping 广东 gd_tp_coins 币种
+//                addGDTPcoinsForMapping();
+//                break;
+//            case "14":
+//                //mapping 广东 gd_tp_industry 国民经济行业
+//                addGDTPIndustryForMapping();
+//                break;
         }
     }
 
-    private void addGDTPIndustryForMapping() throws IOException {
-        StringBuilder stringBuilder = parseTextFile("d://txt/gd_tp_industry.txt");
-        int num=paymentService.addGDTPIndustryForMapping(stringBuilder);
-    }
-
-    private void addGDTPcoinsForMapping() throws IOException {
-        StringBuilder stringBuilder = parseTextFile("d://txt/gd_tp_coins.txt");
-        int num=paymentService.addGDTPcoinsForMapping(stringBuilder);
-    }
-
-    private void addGDCITCountryDiffForMapping() throws IOException {
-        //        StringBuilder stringBuilder = parseTextFile("d://txt/gd_industry_一级.txt");
-        StringBuilder stringBuilder = parseTextFile("d://txt/gd_cit_country_diff.txt");
-//        StringBuilder stringBuilder = parseTextFile("d://txt/industry_2.txt");
-        int num=paymentService.addGDCITCountryDiffForMapping(stringBuilder);
-    }
-
-    private void changeGDCITIndustryForMapping() throws IOException {
-//        StringBuilder stringBuilder = parseTextFile("d://txt/gd_industry_一级.txt");
-        StringBuilder stringBuilder = parseTextFile("d://txt/gd_industry_三级.txt");
-//        StringBuilder stringBuilder = parseTextFile("d://txt/industry_2.txt");
-        int num=paymentService.changeGDCITIndustryForMapping(stringBuilder);
-    }
-
-    private void addGDCITCertifyForMapping() throws IOException {
-        StringBuilder stringBuilder = parseTextFile("d://txt/gd_cit_certify.txt");
-        int num=paymentService.addGDCITCertifyForMapping(stringBuilder);
-    }
-
-    private void addGDCITCountryForMapping() throws IOException {
-        StringBuilder stringBuilder = parseTextFile("d://txt/gz_cit_country.txt");
-        int num=paymentService.addGDCITCountryForMapping(stringBuilder);
-    }
-
-    private void addGDCountryForMapping() throws IOException {
-        StringBuilder stringBuilder = parseTextFile("d://txt/gz_country.txt");
-        int num=paymentService.addGDCountryForMapping(stringBuilder);
-    }
-
-    private void supplementNameForMapping() throws IOException {
-        StringBuilder stringBuilder = parseTextFile("d://txt/country_补充.txt");
-        int num=paymentService.supplementContryForMapping(stringBuilder);
-    }
-
-    private void addNameForMapping() {
-        paymentService.addNameForMapping();
-    }
-
-    private void changeIndustryForMapping() throws IOException {
-//        StringBuilder stringBuilder = parseTextFile("d://txt/gd_industry_一级.txt");
-        StringBuilder stringBuilder = parseTextFile("d://txt/industry_2.txt");
-        int num=paymentService.changeIndustryForMapping(stringBuilder);
-    }
-
-    private void addCountryEng() throws IOException {
-        StringBuilder stringBuilder = parseTextFile("d://txt/sql_addcountryent.txt");
-        int num=paymentService.addCountryEng(stringBuilder);
-    }
-
-    private void changeCodeNoForMapping(String codeNo) {
-        int num=paymentService.changeCodeNoForMapping(codeNo);
-    }
-
-    private void changeContryForMapping() throws IOException {
-        StringBuilder stringBuilder = parseTextFile("d://txt/country.txt");
+//    private void addGDTPIndustryForMapping() throws IOException {
+//        StringBuilder stringBuilder = parseTextFile("d://txt/gd_tp_industry.txt");
+//        int num=paymentService.addGDTPIndustryForMapping(stringBuilder);
+//    }
+//
+//    private void addGDTPcoinsForMapping() throws IOException {
+//        StringBuilder stringBuilder = parseTextFile("d://txt/gd_tp_coins.txt");
+//        int num=paymentService.addGDTPcoinsForMapping(stringBuilder);
+//    }
+//
+//    private void addGDCITCountryDiffForMapping() throws IOException {
+//        //        StringBuilder stringBuilder = parseTextFile("d://txt/gd_industry_一级.txt");
+//        StringBuilder stringBuilder = parseTextFile("d://txt/gd_cit_country_diff.txt");
+////        StringBuilder stringBuilder = parseTextFile("d://txt/industry_2.txt");
+//        int num=paymentService.addGDCITCountryDiffForMapping(stringBuilder);
+//    }
+//
+//    private void changeGDCITIndustryForMapping() throws IOException {
+////        StringBuilder stringBuilder = parseTextFile("d://txt/gd_industry_一级.txt");
+//        StringBuilder stringBuilder = parseTextFile("d://txt/gd_industry_三级.txt");
+////        StringBuilder stringBuilder = parseTextFile("d://txt/industry_2.txt");
+//        int num=paymentService.changeGDCITIndustryForMapping(stringBuilder);
+//    }
+//
+//    private void addGDCITCertifyForMapping() throws IOException {
+//        StringBuilder stringBuilder = parseTextFile("d://txt/gd_cit_certify.txt");
+//        int num=paymentService.addGDCITCertifyForMapping(stringBuilder);
+//    }
+//
+//    private void addGDCITCountryForMapping() throws IOException {
+//        StringBuilder stringBuilder = parseTextFile("d://txt/gz_cit_country.txt");
+//        int num=paymentService.addGDCITCountryForMapping(stringBuilder);
+//    }
+//
+//    private void addGDCountryForMapping() throws IOException {
+//        StringBuilder stringBuilder = parseTextFile("d://txt/gz_country.txt");
+//        int num=paymentService.addGDCountryForMapping(stringBuilder);
+//    }
+//
+//    private void supplementNameForMapping() throws IOException {
 //        StringBuilder stringBuilder = parseTextFile("d://txt/country_补充.txt");
-        int num=paymentService.changeContryForMapping(stringBuilder);
-    }
-
-    private void changeAndSortExchange() throws IOException {
-        FileInputStream inputStream = new FileInputStream("d://exchange.txt");
-        StringBuilder stringBuilder=parseTextFile("d://exchange.txt");
-        int num=paymentService.changeAndSortExchange(stringBuilder);
-    }
+//        int num=paymentService.supplementContryForMapping(stringBuilder);
+//    }
+//
+//    private void addNameForMapping() {
+//        paymentService.addNameForMapping();
+//    }
+//
+//    private void changeIndustryForMapping() throws IOException {
+////        StringBuilder stringBuilder = parseTextFile("d://txt/gd_industry_一级.txt");
+//        StringBuilder stringBuilder = parseTextFile("d://txt/industry_2.txt");
+//        int num=paymentService.changeIndustryForMapping(stringBuilder);
+//    }
+//
+//    private void addCountryEng() throws IOException {
+//        StringBuilder stringBuilder = parseTextFile("d://txt/sql_addcountryent.txt");
+//        int num=paymentService.addCountryEng(stringBuilder);
+//    }
+//
+//    private void changeCodeNoForMapping(String codeNo) {
+//        int num=paymentService.changeCodeNoForMapping(codeNo);
+//    }
+//
+//    private void changeContryForMapping() throws IOException {
+//        StringBuilder stringBuilder = parseTextFile("d://txt/country.txt");
+////        StringBuilder stringBuilder = parseTextFile("d://txt/country_补充.txt");
+//        int num=paymentService.changeContryForMapping(stringBuilder);
+//    }
+//
+//    private void changeAndSortExchange() throws IOException {
+//        FileInputStream inputStream = new FileInputStream("d://exchange.txt");
+//        StringBuilder stringBuilder=parseTextFile("d://exchange.txt");
+//        int num=paymentService.changeAndSortExchange(stringBuilder);
+//    }
 
     private StringBuilder parseTextFile(String filePath) throws IOException {
         FileInputStream inputStream = new FileInputStream(filePath);
@@ -310,31 +310,31 @@ public class PdfController {
         return stringBuilder;
     }
 
-    private void sortCertificate() throws IOException {
-        StringBuilder stringBuilder = parseTextFile("d://certificate.txt");
-        int num=paymentService.sortCertificate(stringBuilder);
-    }
-
-    private void sortCountry() throws IOException {
-        StringBuilder stringBuilder = parseTextFile("d://co.txt");
-        int num=paymentService.sortCountry(stringBuilder);
-    }
-
-    private void changeCoin() throws IOException {
-        StringBuilder stringBuilder = parseTextFile("d://rmb.txt");
-        int num=paymentService.changeCoin(stringBuilder);
-    }
-
-
-    private void changeCertificate() throws IOException {
-        StringBuilder stringBuilder = parseTextFile("d://certificate.txt");
-        int num=paymentService.updateCertificate(stringBuilder);
-    }
-
-    private void changeCountry() throws IOException {
-        StringBuilder stringBuilder = parseTextFile("d://co.txt");
-        int num=paymentService.updateCountry(stringBuilder);
-    }
+//    private void sortCertificate() throws IOException {
+//        StringBuilder stringBuilder = parseTextFile("d://certificate.txt");
+//        int num=paymentService.sortCertificate(stringBuilder);
+//    }
+//
+//    private void sortCountry() throws IOException {
+//        StringBuilder stringBuilder = parseTextFile("d://co.txt");
+//        int num=paymentService.sortCountry(stringBuilder);
+//    }
+//
+//    private void changeCoin() throws IOException {
+//        StringBuilder stringBuilder = parseTextFile("d://rmb.txt");
+//        int num=paymentService.changeCoin(stringBuilder);
+//    }
+//
+//
+//    private void changeCertificate() throws IOException {
+//        StringBuilder stringBuilder = parseTextFile("d://certificate.txt");
+//        int num=paymentService.updateCertificate(stringBuilder);
+//    }
+//
+//    private void changeCountry() throws IOException {
+//        StringBuilder stringBuilder = parseTextFile("d://co.txt");
+//        int num=paymentService.updateCountry(stringBuilder);
+//    }
 
 
 

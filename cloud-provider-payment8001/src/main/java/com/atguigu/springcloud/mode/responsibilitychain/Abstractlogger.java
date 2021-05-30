@@ -9,12 +9,12 @@ package com.atguigu.springcloud.mode.responsibilitychain;
 
 public abstract class Abstractlogger {
     public static int INFO=1;
-    public static int DEBUG=2;
-    public static int ERROR=3;
+    public static int DEBUG=1;
+    public static int ERROR=1;
 
     protected int levle;
 
-    //责任链的下一个元素(链对象 )
+    //责任链的下一个元素
     protected Abstractlogger nextLogger;
 
     public Abstractlogger getNextLogger() {
@@ -25,10 +25,8 @@ public abstract class Abstractlogger {
         this.nextLogger = nextLogger;
     }
 
-    // 链方法
     public void logMessage(int level,String message){
         if (this.levle<=level){
-            //在链方法中调用职责方法
             write(message);
         }
         if (nextLogger!=null){
@@ -36,6 +34,5 @@ public abstract class Abstractlogger {
         }
     }
 
-    //职责方法
     abstract protected void write(String message);
 }

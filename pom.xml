@@ -16,7 +16,7 @@
         <module>cloud-provider-payment8002</module>
         <module>cloud-providerconsul-payment8006</module>
         <module>cloud-consumerconsul-order8180</module>
-        <module>cloud-consumer-feign-order8181</module>
+        <module>cloud-consumer-feign-order8081</module>
         <module>cloud-provider-hystrix-payment8003</module>
         <module>cloud-consumer-feign-hystrix-order8182</module>
         <module>cloud-gateway-gateway9527</module>
@@ -36,6 +36,7 @@
         <module>seata-order-service2003</module>
         <module>cloud-quartz-job3001</module>
         <module>cloud-quartz-job3002</module>
+        <module>xxl-job</module>
 
     </modules>
     <packaging>pom</packaging>

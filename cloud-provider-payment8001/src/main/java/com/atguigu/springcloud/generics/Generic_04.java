@@ -53,8 +53,6 @@ public class Generic_04 {
         ManagedList<Object> objects = new ManagedList<>();
         // 这里没报错??
         generic_04.showLower(objects);
-
-
     }
 
 }

@@ -116,7 +116,8 @@ public class Computer {
     }
 
     public static void main(String[] args) {
-        Computer build = new Builder().cpu("Cpu").keyBoard("qeq").ram("qwe").build();
+        Computer build = new Computer
+                .Builder().cpu("Cpu").keyBoard("qeq").ram("qwe").build();
         System.out.println(build.toString());
     }
 }

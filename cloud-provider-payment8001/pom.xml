@@ -11,6 +11,12 @@
 
     <artifactId>cloud-provider-payment8001</artifactId>
     <dependencies>
+<!--        xxl-job-->
+        <dependency>
+            <groupId>com.xuxueli</groupId>
+            <artifactId>xxl-job-core</artifactId>
+            <version>2.3.1-SNAPSHOT</version>
+        </dependency>
 
         <!-- https://mvnrepository.com/artifact/technology.tabula/tabula -->
 <!--        <dependency>-->
@@ -66,10 +72,11 @@
 <!--            <artifactId>mybatis-spring-boot-starter</artifactId>-->
 <!--        </dependency>-->
 
+        <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-boot-starter -->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>3.0.5</version>
+            <version>3.4.2</version>
         </dependency>
 
 
