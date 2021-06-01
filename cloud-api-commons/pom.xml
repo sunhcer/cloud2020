@@ -61,6 +61,19 @@
             <artifactId>hutool-all</artifactId>
             <version>5.1.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-annotation</artifactId>
+            <version>3.3.2</version>
+            <scope>compile</scope>
+        </dependency>
+
+<!--        雪花-->
+        <dependency>
+            <groupId>com.github.yitter</groupId>
+            <artifactId>yitter-idgenerator</artifactId>
+            <version>1.0.6</version>
+        </dependency>
     </dependencies>
 
 </project>

@@ -8,6 +8,7 @@ import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 @EnableEurekaServer//这是eureka服务中心注解
 public class EurekaMain7001 {
 
+
     public static void main(String[] args) {
         //mainbo快捷键---------用不了
         SpringApplication.run(EurekaMain7001.class,args);

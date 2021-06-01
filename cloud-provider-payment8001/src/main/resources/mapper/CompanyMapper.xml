@@ -60,9 +60,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectTwoLevel" parameterType="String" resultMap="CompanyTwoResult">
         select c.id as id ,d.id as did , c.username as username, d.name as name , d.company_id as company_id
-        from company c, department d
-        where c.id=d.company_id   and  c.id=#{id}
+        from company c left join department d on  c.id=d.company_id
+        where  c.id=#{id}
     </select>
+
+<!--    <select id="selectTwoLevel" parameterType="String" resultType="com.atguigu.springcloud.vo.Company">-->
+<!--        select * from company-->
+<!--    </select>-->
+
     <select id="selectThreeLevel" parameterType="String" resultMap="CompanyThreeResult">
         select c.id as id ,d.id as did , c.username as username, d.name as name , d.company_id as company_id,
         e.id as eid ,e.department_id as department_id ,e.username as eusername

@@ -69,4 +69,11 @@ public class MybtisController {
         }
         return CommonResult.succ("成功");
     }
+
+
+    @GetMapping
+    @MemoryCaculateLog
+    public CommonResult cache(){
+        return iCompanyService.selectCache();
+    }
 }

@@ -1,5 +1,11 @@
 package com.atguigu.springcloud;
 
+import com.atguigu.springcloud.entities.CodeLibrary;
+import com.atguigu.springcloud.entities.User;
+import com.atguigu.springcloud.service.CodeLibraryService;
+import com.atguigu.springcloud.service.CodeLibraryService2;
+import com.atguigu.springcloud.service.UserService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,6 +16,13 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * mq发送测试类
@@ -47,11 +60,11 @@ public class MqSenderTest {
          * 1ms=1000us=1000000ns
          * 1MB=1024 kb = 1024*1024 byte
          */
-        String costTime=String.valueOf((concurrentTime2-concurrentTime1)/1000000);
-        String costMemory=String.valueOf(concurrentMemory2-concurrentMemory1/(1024*1024));
-        System.out.println("执行时间:"+costTime);
-        System.out.println("内存消耗:"+costMemory);
-        System.out.println("---------------执行时间为：" + costTime.substring(0,costTime.equals("0.0") ? 1 : (costTime.indexOf(".")+3)) + " ms, 消耗内存：" + costMemory.substring(0,costMemory.equals("0.0") ? 1 : (costMemory.indexOf(".")+3)) + " M + !---------------");
+        String costTime = String.valueOf((concurrentTime2 - concurrentTime1) / 1000000);
+        String costMemory = String.valueOf(concurrentMemory2 - concurrentMemory1 / (1024 * 1024));
+        System.out.println("执行时间:" + costTime);
+        System.out.println("内存消耗:" + costMemory);
+        System.out.println("---------------执行时间为：" + costTime.substring(0, costTime.equals("0.0") ? 1 : (costTime.indexOf(".") + 3)) + " ms, 消耗内存：" + costMemory.substring(0, costMemory.equals("0.0") ? 1 : (costMemory.indexOf(".") + 3)) + " M + !---------------");
     }
 
     @Autowired
@@ -126,10 +139,73 @@ public class MqSenderTest {
 
 
     @Test
-    public void testAOP(){
-        for (int i = 0; i <1000; i++) {
+    public void testAOP() {
+        for (int i = 0; i < 1000; i++) {
             System.out.println(i);
         }
     }
+
+
+    @Autowired
+    private CodeLibraryService codeLibraryService;
+    @Autowired
+    private CodeLibraryService2 codeLibraryService2;
+
+    @Test
+    public void testDoubleService() {
+        List<CodeLibrary> samplePollutants = codeLibraryService.list(new QueryWrapper<CodeLibrary>()
+                .lambda().eq(CodeLibrary::getCodeNo, "samplePollutants"));
+        samplePollutants.forEach(System.out::println);
+
+        List<CodeLibrary> samplePollutants1 = codeLibraryService2.list(new QueryWrapper<CodeLibrary>()
+                .lambda().eq(CodeLibrary::getCodeNo, "samplePollutants"));
+        samplePollutants1.forEach(System.out::println);
+
+
+
+    }
+
+    @Autowired
+    private UserService userService;
+
+    @Test
+    public void testBatch(){
+        List<User> list = userService.list(null);
+        list.forEach(System.out::println);
+        Map<String, List<User>> collect = list.stream().collect(Collectors.groupingBy(User::getEmail));
+        System.out.println("collect = " + collect.toString());
+        System.out.println("userService.saveOrUpdateBatch(list) = " + userService.saveOrUpdateBatch(list));
+
+    }
+
+    @Test
+    public void testIn(){
+        List<User> list = userService.list(new QueryWrapper<User>().lambda()
+                .isNull(User::getEmail)
+                .in(User::getId, Arrays.asList("1", "2")));
+        System.out.println("list = " + list);
+    }
+
+    @Test
+    public void testUser(){
+        User user = new User();
+        user.setId(99L);
+        user.setAge(12);
+//        userService.save(user);
+
+        user.setId(100L);
+//        userService.save(user);
+
+        List<User> users =userService.list(new QueryWrapper<User>().lambda()
+        .eq(User::getId,111));
+
+        System.out.println(users);
+        users=null;
+        for (User user1 : users) {
+            System.out.println("user1.getId() = " + user1.getId());
+        }
+
+    }
+
 
 }

@@ -2,11 +2,14 @@ package com.atguigu.springcloud.service.impl;
 
 import java.util.List;
 
+import com.atguigu.springcloud.config.RedisStringUtil;
 import com.atguigu.springcloud.dao.CompanyMapper;
+import com.atguigu.springcloud.entities.CommonResult;
 import com.atguigu.springcloud.entities.Payment;
 import com.atguigu.springcloud.service.ICompanyService;
 import com.atguigu.springcloud.vo.Company;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +24,9 @@ public class CompanyServiceImpl implements ICompanyService
 {
     @Autowired
     private CompanyMapper companyMapper;
+
+    @Autowired
+    private RedisStringUtil redisStringUtil;
 
     /**
      * 查询企业
@@ -121,5 +127,11 @@ public class CompanyServiceImpl implements ICompanyService
         System.out.println("更新条数:"+updateNum);
         //switch
         return 0;
+    }
+
+    @Override
+    @Cacheable(cacheNames = "kkk")
+    public CommonResult selectCache() {
+        return null;
     }
 }

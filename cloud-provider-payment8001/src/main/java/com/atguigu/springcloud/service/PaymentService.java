@@ -47,4 +47,7 @@ public interface PaymentService {
     int addGDTPcoinsForMapping(StringBuilder stringBuilder);
 
     int addGDTPIndustryForMapping(StringBuilder stringBuilder);
+
+    void generateTwoLevel();
+
 }

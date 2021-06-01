@@ -9,9 +9,9 @@ import com.atguigu.springcloud.mode.strategy.strategyfactory.Context;
 import com.atguigu.springcloud.service.PaymentService;
 import io.github.jonathanlink.PDFLayoutTextStripper;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.DefaultParser;
+//import org.apache.commons.cli.CommandLine;
+//import org.apache.commons.cli.CommandLineParser;
+//import org.apache.commons.cli.DefaultParser;
 import org.apache.pdfbox.io.RandomAccessFile;
 import org.apache.pdfbox.pdfparser.PDFParser;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import technology.tabula.CommandLineApp;
+//import technology.tabula.CommandLineApp;
 
 import java.io.*;
 
@@ -55,17 +55,17 @@ public class PdfController {
     @GetMapping("/csvParse")
     public void parsePDF(){
         //解密文件路径
-        String filePath = "E:/TaxSaaS/upload/2021/03/26/202103261726111895072263.pdf";
-        //获取pdf的所有填报的表格信息
-        JSONArray jsonArray1 = returnPdfEntityList(filePath);
-        JSONArray array = (JSONArray) jsonArray1.get(23);
-        System.out.println(array.toString());
-        JSONArray array1 = (JSONArray) array.get(8);
-        JSONObject o = (JSONObject)array1.get(2);
-        Object text = o.get("text");
-        System.out.println("=========================================="+text.toString());
-        System.out.println(array1.get(3).toString());
-        System.out.println(array1.get(4).toString());
+//        String filePath = "E:/TaxSaaS/upload/2021/03/26/202103261726111895072263.pdf";
+//        //获取pdf的所有填报的表格信息
+//        JSONArray jsonArray1 = returnPdfEntityList(filePath);
+//        JSONArray array = (JSONArray) jsonArray1.get(23);
+//        System.out.println(array.toString());
+//        JSONArray array1 = (JSONArray) array.get(8);
+//        JSONObject o = (JSONObject)array1.get(2);
+//        Object text = o.get("text");
+//        System.out.println("=========================================="+text.toString());
+//        System.out.println(array1.get(3).toString());
+//        System.out.println(array1.get(4).toString());
 
     }
 
@@ -73,12 +73,12 @@ public class PdfController {
     //不行的,tabula 生成的csv文件还是会挤在一起
     @GetMapping("/pdf2Csv")
     public void pdf2Csv(){
-        //pdf先转换成csv文件 输出到文件
-        String[] ar={"-o=E:/TaxSaaS/pdfParse/output.csv","-p=all","E:/TaxSaaS/upload/2021/03/26/202103261726111895072263.pdf"};
-        //提取的信息输出到控制台
-        String[] ar1={"-p=all","E:/TaxSaaS/upload/2021/03/26/202103261726111895072263.pdf"};
-
-        CommandLineApp.main(ar);
+//        //pdf先转换成csv文件 输出到文件
+//        String[] ar={"-o=E:/TaxSaaS/pdfParse/output.csv","-p=all","E:/TaxSaaS/upload/2021/03/26/202103261726111895072263.pdf"};
+//        //提取的信息输出到控制台
+//        String[] ar1={"-p=all","E:/TaxSaaS/upload/2021/03/26/202103261726111895072263.pdf"};
+//
+//        CommandLineApp.main(ar);
         //PdfUtil.convert2Csv("E:\\doc\\pdf\\(2018) .pdf", "output.csv");
     }
 
@@ -106,31 +106,32 @@ public class PdfController {
 
     public JSONArray returnPdfEntityList(String filePath) {
         // 增加了-l之后可以让他 黏在一起的值分开
-        String[] args = new String[]{"-f=JSON", "-p=all","-l", filePath};
-        JSONArray data=new JSONArray();
-        try {
-            //解析pdf当中的所有表格信息
-            CommandLineParser parser = new DefaultParser();
-            CommandLine cmd = parser.parse(CommandLineApp.buildOptions(), args);
-            StringBuilder stringBuilder = new StringBuilder();
-            new CommandLineApp(stringBuilder, cmd).extractTables(cmd);
-            String resul = stringBuilder.toString();
-            //解析出来的Strign 字符 转为JSONArray
-            JSONArray jsonArray = JSONUtil.parseArray(resul);
-            //通过循环获取第二层的data值
-            for (Object o : jsonArray) {
-                JSONObject jsonObject= (JSONObject) o;
-                JSONArray data1 = (JSONArray) jsonObject.get("data");
-
-                if (data1.size() !=0 && data1.size() !=2){
-                    data.add(data1);
-                }
-            }
-            log.info("解析表格结束........");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return data;
+//        String[] args = new String[]{"-f=JSON", "-p=all","-l", filePath};
+//        JSONArray data=new JSONArray();
+//        try {
+//            //解析pdf当中的所有表格信息
+//            CommandLineParser parser = new DefaultParser();
+//            CommandLine cmd = parser.parse(CommandLineApp.buildOptions(), args);
+//            StringBuilder stringBuilder = new StringBuilder();
+//            new CommandLineApp(stringBuilder, cmd).extractTables(cmd);
+//            String resul = stringBuilder.toString();
+//            //解析出来的Strign 字符 转为JSONArray
+//            JSONArray jsonArray = JSONUtil.parseArray(resul);
+//            //通过循环获取第二层的data值
+//            for (Object o : jsonArray) {
+//                JSONObject jsonObject= (JSONObject) o;
+//                JSONArray data1 = (JSONArray) jsonObject.get("data");
+//
+//                if (data1.size() !=0 && data1.size() !=2){
+//                    data.add(data1);
+//                }
+//            }
+//            log.info("解析表格结束........");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return data;
+        return null;
     }
 // 按行读取txt,然后更新国家名称和编码
     @GetMapping("/changeTxt")

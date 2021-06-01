@@ -1,9 +1,0 @@
-com\atguigu\springcloud\service\impl\QuartzServiceImpl.class
-com\atguigu\springcloud\dao\PaymentDao.class
-com\atguigu\springcloud\springjob\QuartzJobTest.class
-com\atguigu\springcloud\QuartzMain3001.class
-com\atguigu\springcloud\config\QuartzDataSourceConfig.class
-com\atguigu\springcloud\test\HelloJob.class
-com\atguigu\springcloud\jobdetailandtigger\Jobinit.class
-com\atguigu\springcloud\test\QuartzTest.class
-com\atguigu\springcloud\service\QuartzService.class

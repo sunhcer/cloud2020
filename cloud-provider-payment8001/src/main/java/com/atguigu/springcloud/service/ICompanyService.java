@@ -1,5 +1,6 @@
 package com.atguigu.springcloud.service;
 
+import com.atguigu.springcloud.entities.CommonResult;
 import com.atguigu.springcloud.vo.Company;
 
 import java.util.List;
@@ -68,4 +69,7 @@ public interface ICompanyService
     List<Company> selectNON(String id);
 
     int batchUpdate(String serino);
+
+    CommonResult selectCache();
+
 }

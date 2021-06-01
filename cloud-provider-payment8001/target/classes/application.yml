@@ -10,7 +10,7 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: org.gjt.mm.mysql.Driver
-    url: jdbc:mysql://localhost:3306/db2019?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    url: jdbc:mysql://localhost:3306/db2019?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2b8
     username: root
     password: mysql1234
 #    redis单机配置
@@ -21,9 +21,9 @@ spring:
   rabbitmq:
     host: localhost
     port: 5672
-    username: ems
-    password: 123456
-    virtual-host: /ems
+    username: guest
+    password: guest
+    virtual-host: /
 
 #    redis集群配置
 #  redis:
@@ -57,5 +57,7 @@ eureka:
 
 mybatis:
   config-location: classpath:mybatis-config.xml
-  mapperLocations: classpath:mapper/*.xml
   type-aliases-package: com.atguigu.springcloud.entities
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml

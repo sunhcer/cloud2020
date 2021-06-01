@@ -1,5 +1,8 @@
 package com.atguigu.springcloud.entities;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -10,7 +13,9 @@ import java.util.Objects;
 /**
  * 字典
  */
+@TableName("code_libaray")
 public class CodeLibrary implements Serializable {
+
 
     @ApiModelProperty(value = "分类编号")
     private String codeNo;
@@ -49,7 +54,6 @@ public class CodeLibrary implements Serializable {
     @ApiModelProperty(value = "最后更新时间")
     @JsonFormat(pattern = "YYYY-MM-dd HH:mm:ss")
     private Date updateTime;
-
 
     @ApiModelProperty(value = "备注")
     private String remark;

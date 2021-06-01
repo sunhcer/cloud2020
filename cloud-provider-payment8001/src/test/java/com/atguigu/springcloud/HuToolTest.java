@@ -2,14 +2,17 @@ package com.atguigu.springcloud;
 
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.atguigu.springcloud.annotation.MemoryCaculateLog;
 import com.atguigu.springcloud.aspect.MemeryAspect;
 import com.atguigu.springcloud.controller.MybtisController;
+import com.google.common.collect.ImmutableMap;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.platform.commons.util.StringUtils;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,10 +25,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-@EnableAspectJAutoProxy(proxyTargetClass = true)
-@ComponentScan("com.atguigu.springcloud")
+//@RunWith(SpringRunner.class)
+//@SpringBootTest
+//@EnableAspectJAutoProxy(proxyTargetClass = true)
+//@ComponentScan("com.atguigu.springcloud")
 public class HuToolTest {
     //测试类配置切面
     public static long concurrentTime1, concurrentTime2, concurrentMemory1, concurrentMemory2;
@@ -53,14 +56,14 @@ public class HuToolTest {
          * 1MB=1024 kb = 1024*1024 byte
          */
         String costTime = String.valueOf((concurrentTime2 - concurrentTime1) / 1000000);
-        String costMemory = String.valueOf(concurrentMemory2 - concurrentMemory1 / (1024 * 1024));
-        System.out.println("执行时间:" + costTime);
-        System.out.println("内存消耗:" + costMemory);
-        System.out.println("---------------执行时间为：" + costTime.substring(0, costTime.equals("0.0") ? 1 : (costTime.indexOf(".") + 3)) + " ms, 消耗内存：" + costMemory.substring(0, costMemory.equals("0.0") ? 1 : (costMemory.indexOf(".") + 3)) + " M + !---------------");
+        String costMemory = String.valueOf((concurrentMemory2 - concurrentMemory1) / (1024 * 1024));
+        System.out.println("执行时间:" + costTime + " ms");
+        System.out.println("内存消耗:" + costMemory + "mb");
+//        System.out.println("---------------执行时间为：" + costTime.substring(0, costTime.equals("0.0") ? 1 : (costTime.indexOf(".") + 3)) + " ms, 消耗内存：" + costMemory.substring(0, costMemory.equals("0.0") ? 1 : (costMemory.indexOf(".") + 3)) + " M + !---------------");
     }
 
-    @Autowired
-    MybtisController mybtisController;
+//    @Autowired
+//    MybtisController mybtisController;
 
     @Test
     public void CollUtilTest() {
@@ -109,6 +112,67 @@ public class HuToolTest {
         StringBuilder builder = StrUtil.builder();
         StringBuilder append = builder.append("hutool").append("StrUtil").append(".builder");
         System.out.println(append);
-        mybtisController.memoryCost(100);
+
+        StringBuilder builder1 = StrUtil.builder(10);
+        //将已有字符串填充为规定长度
+        String str = "HM";
+        char fillItem = 'c';
+        //len 为字符串的总长度 isPre代表是从前面开填充还是从后面开始填充
+        String fill = StrUtil.fill(str, fillItem, 9, true);
+        System.out.println("将已有字符串填充为规定长度" + fill);
+        String fill1 = StrUtil.fill(str, fillItem, 9, false);
+        System.out.println("将已有字符串填充为规定长度" + fill1);
+
+        //格式化文本 根据key 拿到对应的value 填充到占位符里面
+        HashMap<String, Object> map = CollUtil.newHashMap(16);
+        //Guava包快速初始化Map
+        Map<String, String> of = ImmutableMap.of("a", "aValue", "b", "bValue");
+        String s = of.get("a");
+        String format = StrUtil.format("{a} for {b}", of);
+        System.out.println("map取value占位符初始化:" + format);
+
+        /**
+         * 当给定字符串为null时，转换为Empty ---> nullToEmpty
+         * 如果字符串是 null，则返回指定默认字符串，否则返回字符串本身。---> nullToDefault
+         * 如果字符串是null或者""，则返回指定默认字符串，否则返回字符串本身。--->emptyToDefault
+         * 空字符串 ""  , null , 空格(空白) 字符串
+         */
+        //null
+        String blank = null;
+        boolean blankIfStr = StrUtil.isBlankIfStr(blank);
+        System.out.println(blankIfStr);
+        System.out.println("nullToDefault: null " + StrUtil.nullToDefault(blank, "1111"));
+        System.out.println("nullToEmpty: null " + StrUtil.nullToEmpty(blank)+StrUtil.hasEmpty(blank));
+
+        //空串
+        String empty = "";
+        boolean emptyIfStr = StrUtil.isEmptyIfStr(empty);
+        System.out.println(emptyIfStr);
+        System.out.println("nullToEmpty: 空串 "+StrUtil.nullToEmpty(empty)+StrUtil.hasEmpty(empty));
+
+        //null的字符串
+        String nullStr = "nullStr";
+        System.out.println("");
+
     }
+
+    @Test
+    public void reflectTest(){
+        String name = this.getClass().getName();
+        String typeName = this.getClass().getTypeName();
+        System.out.println(name);
+        System.out.println(typeName);
+    }
+
+    @Test
+    public void StreamCost(){
+        int i=1000000;
+
+    }
+
+    @Test
+    public void testdate(){
+        System.out.println("DateUtil.date() = " + DateUtil.date());
+    }
+
 }
