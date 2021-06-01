@@ -30,7 +30,6 @@ public class MybtisController {
     @Autowired
     private ICompanyService iCompanyService;
 
-
     @GetMapping("payment/selectTwoLevel/{id}")
     @ControllerWebLog(name="测试2层嵌套")
     @ApiOperation("测试2层嵌套")
