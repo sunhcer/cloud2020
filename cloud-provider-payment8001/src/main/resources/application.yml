@@ -10,7 +10,8 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: org.gjt.mm.mysql.Driver
-    url: jdbc:mysql://localhost:3306/db2019?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2b8
+#    开启批处理
+    url: jdbc:mysql://localhost:3306/db2019?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2b8&rewriteBatchedStatements=true
     username: root
     password: mysql1234
 #    redis单机配置
@@ -42,7 +43,8 @@ spring:
 #        - 192.168.75.132:6383
 #        - 192.168.75.132:6384
 #        - 192.168.75.132:6385
-
+file:
+  path: 'D:\原型\季度'
 
 eureka:
   client:

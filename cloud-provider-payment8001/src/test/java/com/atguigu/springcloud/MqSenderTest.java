@@ -1,11 +1,13 @@
 package com.atguigu.springcloud;
 
+import cn.hutool.core.util.RandomUtil;
 import com.atguigu.springcloud.entities.CodeLibrary;
 import com.atguigu.springcloud.entities.User;
 import com.atguigu.springcloud.service.CodeLibraryService;
 import com.atguigu.springcloud.service.CodeLibraryService2;
 import com.atguigu.springcloud.service.UserService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.github.yitter.idgen.YitIdHelper;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -203,6 +205,32 @@ public class MqSenderTest {
         users=null;
         for (User user1 : users) {
             System.out.println("user1.getId() = " + user1.getId());
+        }
+
+    }
+
+    /**
+     * 插入一百万条
+     */
+    @Test
+    public void test77(){
+        ArrayList<User> users = new ArrayList<>();
+        for (int i = 0; i < 1000000; i++) {
+            User user = new User();
+            user.setId(YitIdHelper.nextId());
+//            user.setAge(RandomUtil.randomInt(0,99));
+//            user.setName(RandomUtil.randomString(6));
+//            user.setEmail(RandomUtil.randomString(8)+"@163.com");
+
+            user.setAge(1);
+            user.setName("2");
+            user.setEmail("3");
+            users.add(user);
+            if (users.size()==1000){
+                userService.saveBatch(users);
+                users.clear();
+                System.out.println(i);
+            }
         }
 
     }

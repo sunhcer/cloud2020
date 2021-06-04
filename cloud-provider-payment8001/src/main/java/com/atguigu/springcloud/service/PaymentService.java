@@ -2,6 +2,7 @@ package com.atguigu.springcloud.service;
 
 import com.atguigu.springcloud.entities.Payment;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -50,4 +51,10 @@ public interface PaymentService {
 
     void generateTwoLevel();
 
+    /**
+     * 单文件上传
+     * @param userId
+     * @param file
+     */
+    void singleUpload(String userId, MultipartFile file);
 }

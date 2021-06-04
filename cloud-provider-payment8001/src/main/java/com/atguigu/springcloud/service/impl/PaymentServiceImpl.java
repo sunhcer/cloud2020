@@ -1,6 +1,7 @@
 package com.atguigu.springcloud.service.impl;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.lang.UUID;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelReader;
@@ -12,17 +13,24 @@ import com.atguigu.springcloud.dao.PaymentDao;
 import com.atguigu.springcloud.entities.CodeLibrary;
 import com.atguigu.springcloud.entities.EntCodeMappingEntity;
 import com.atguigu.springcloud.entities.Payment;
+import com.atguigu.springcloud.entities.UploadFileEntity;
 import com.atguigu.springcloud.service.CodeLibraryService;
 import com.atguigu.springcloud.service.PaymentService;
+import com.atguigu.springcloud.util.FileUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
+import com.github.yitter.idgen.YitIdHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 @Service
@@ -32,6 +40,9 @@ public class PaymentServiceImpl implements PaymentService {
     private BeanFinder beanFinder;
     @Resource
     private PaymentDao paymentDao;
+
+    @Value("${file.path}")
+    private String path;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -762,4 +773,60 @@ public class PaymentServiceImpl implements PaymentService {
         }
         log.info("完毕");
     }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void singleUpload(String userId, MultipartFile file) {
+        //获取文件完整名称
+        String originalFilename = file.getOriginalFilename();
+        System.out.println("originalFilename = " + originalFilename);
+
+        // 获取后缀
+        String substring = Objects.requireNonNull(originalFilename).substring(originalFilename.lastIndexOf(".") + 1);
+
+        // TODO: 2021/6/3 校验文件后缀
+
+        // 通过魔数获取后缀,防止篡改 ??? 实际场景是什么
+        String fileType = FileUtils.getFileType(file);
+
+        // TODO: 2021/6/3 上传文件类型校验
+
+        //获取上传文件的md5值
+        String md5 = FileUtils.getMd5(file);
+
+        // TODO: 2021/6/3 根据文件md5 和userid判断文件之前是否上传过
+
+        //文件名防止冲突
+        String fileName = UUID.fastUUID()+"."+substring;
+
+        //获取文件路径
+        String filePath = path+"/"+ File.separator+DateUtil.format(new Date(),"YYYYMMDD")+fileName;
+
+        UploadFileEntity uploadFileEntity = new UploadFileEntity();
+        //云存储id
+        uploadFileEntity.setStorageId(String.valueOf(YitIdHelper.nextId()));
+//        uploadFileEntity.setLastUpdateTime();
+//        uploadFileEntity.setLastUpdateUser();
+        uploadFileEntity.setTaxYear("2021");
+        uploadFileEntity.setFileSize(String.valueOf(file.getSize()));
+//        uploadFileEntity.setDeleteTime();
+        uploadFileEntity.setIfDelete("0");
+//        uploadFileEntity.setDeleteUser();
+        uploadFileEntity.setId(String.valueOf(YitIdHelper.nextId()));
+        uploadFileEntity.setEntId("sunhcer");
+        uploadFileEntity.setFileType(fileType);
+        uploadFileEntity.setFileName(originalFilename);
+        uploadFileEntity.setFileOldName(originalFilename);
+        uploadFileEntity.setFilePath(path);
+//        uploadFileEntity.setFileHttpPath();
+//        uploadFileEntity.setCreateTime();
+//        uploadFileEntity.setCreateUser();
+        try {
+            FileUtils.saveFile(file.getInputStream(),filePath,fileName);
+        } catch (IOException e) {
+
+            log.error("上传失败:{}",e);
+        }
+    }
+
 }

@@ -26,10 +26,10 @@ public class CommonResult<T> {
 //    }
 
     public static CommonResult succ(String message){
-        return new CommonResult<>(400,message);
+        return new CommonResult<>(200,message);
     }
 
     public static CommonResult succ(Object data){
-        return new CommonResult(400,"操作成功",data);
+        return new CommonResult(200,"操作成功",data);
     }
 }
