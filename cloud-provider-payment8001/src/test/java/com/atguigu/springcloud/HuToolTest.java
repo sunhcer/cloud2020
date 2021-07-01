@@ -2,10 +2,12 @@ package com.atguigu.springcloud;
 
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import com.atguigu.springcloud.annotation.MemoryCaculateLog;
 import com.atguigu.springcloud.aspect.MemeryAspect;
 import com.atguigu.springcloud.controller.MybtisController;
+import com.atguigu.springcloud.entities.User;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.junit.After;
 import org.junit.Before;
@@ -111,4 +113,19 @@ public class HuToolTest {
         System.out.println(append);
         mybtisController.memoryCost(100);
     }
+    @Test
+    public void test(){
+        for (int i = 0; i < 5; i++) {
+            System.out.println("RandomUtil.randomString(3) = " + RandomUtil.randomString(3));
+        }
+    }
+    @Test
+    public void test12(){
+        User user = new User();
+        User ds = user.setId(11L).
+                setName("ds");
+        System.out.println("ds = " + ds);
+    }
+
+
 }
