@@ -26,4 +26,6 @@ public class Payment
     private String serial;
 //    @Transient
 //    private String se;
+    @ApiModelProperty("订单数量")
+    private Long amount;
 }

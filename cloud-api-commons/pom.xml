@@ -12,6 +12,13 @@
     <artifactId>cloud-api-commons</artifactId>
 
     <dependencies>
+        <!--skywalking trace 工具包-->
+        <!-- https://mvnrepository.com/artifact/org.apache.skywalking/apm-toolkit-trace -->
+        <dependency>
+            <groupId>org.apache.skywalking</groupId>
+            <artifactId>apm-toolkit-trace</artifactId>
+            <version>8.7.0</version>
+        </dependency>
 
         <dependency>
             <groupId>com.baomidou</groupId>

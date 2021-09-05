@@ -1,6 +1,7 @@
 package com.atguigu.springcloud.aspect;
 
 import com.atguigu.springcloud.annotation.MemoryCaculateLog;
+import org.apache.skywalking.apm.toolkit.trace.TraceContext;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -40,6 +41,8 @@ public class MemeryAspect {
 
     @Before(value = "memoryCaculate()&& @annotation(memoryCaculateLog)")
     public void doBefore(JoinPoint joinPoint, MemoryCaculateLog memoryCaculateLog) {
+        String traceId = TraceContext.traceId();
+        System.out.println("traceId = " + traceId);
         // 开始
         /*计算某一段程序消耗的内存和时间*/
         Map<String, Object> threadInfo = new HashMap<>(16);

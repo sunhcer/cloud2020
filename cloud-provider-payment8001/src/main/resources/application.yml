@@ -74,6 +74,7 @@ mybatis-plus:
       logic-delete-value: 0
 
 xxl:
+#  enable: false
   job:
     accessToken:
     admin:

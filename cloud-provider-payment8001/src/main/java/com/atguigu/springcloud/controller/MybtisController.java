@@ -1,7 +1,9 @@
 package com.atguigu.springcloud.controller;
 
+import cn.hutool.json.JSONUtil;
 import com.atguigu.springcloud.annotation.ControllerWebLog;
 import com.atguigu.springcloud.annotation.MemoryCaculateLog;
+import com.atguigu.springcloud.entities.AlarmMessage;
 import com.atguigu.springcloud.entities.CommonResult;
 import com.atguigu.springcloud.entities.User;
 import com.atguigu.springcloud.service.ICompanyService;
@@ -73,7 +75,7 @@ public class MybtisController {
     public CommonResult memoryCost(@RequestParam int num){
         Integer integer = Optional.ofNullable(num).orElse(1);
         for (int i = 0; i <integer ; i++) {
-            System.out.println(i);
+//            System.out.println(i);
         }
         return CommonResult.succ("成功");
     }
@@ -94,4 +96,25 @@ public class MybtisController {
         return CommonResult.succ(userPageInfo);
     }
 
+    @GetMapping("timeOut8001")
+    @MemoryCaculateLog
+    public void timeOut8001() throws InterruptedException {
+        Thread.sleep(1500);
+    }
+
+    /**
+     * 默认告警条件： 没10分钟检查一次，如果超时1s 达到3次 ，则告警，告警间隔最低5min
+     *skywalking 告警通知类
+     * @Description
+     * @author sunhcer
+     * @date 2021/09/06 01:33
+     * @param alarmMessageList
+     * @return
+     */
+    @PostMapping("skywalkingNotify/")
+    @MemoryCaculateLog
+    public CommonResult skywalkingNotify(@RequestBody List<AlarmMessage> alarmMessageList){
+        System.out.println("JSONUtil.toJsonPrettyStr(alarmMessageList) = " + JSONUtil.toJsonPrettyStr(alarmMessageList));
+        return CommonResult.succ("skywalkingNotify success");
+    }
 }

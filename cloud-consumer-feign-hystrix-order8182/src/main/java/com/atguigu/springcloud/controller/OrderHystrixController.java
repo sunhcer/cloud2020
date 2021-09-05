@@ -5,6 +5,8 @@ import com.netflix.hystrix.contrib.javanica.annotation.DefaultProperties;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.skywalking.apm.toolkit.trace.ActiveSpan;
+import org.apache.skywalking.apm.toolkit.trace.TraceContext;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,6 +33,15 @@ public class OrderHystrixController {
             @HystrixProperty(name="execution.isolation.thread.timeoutInMilliseconds",value = "1500")
     })
     public String paymentInfo_TimeOut(@PathVariable("id")Integer id){
+        /*获取链路追踪id 以在rocketBot中查询*/
+        String traceId = TraceContext.traceId();
+        System.out.println("traceId = " + traceId);
+        int spanId = TraceContext.spanId();
+        System.out.println("spanId = " + spanId);
+
+        //使得当前链路打印日志信息
+        ActiveSpan.error("报错------------------");
+
         String result=paymentHystrix8003Service.paymentinfo_TimeOut(id);
         log.info(result);
         return result;
