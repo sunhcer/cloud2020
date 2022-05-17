@@ -1,9 +1,12 @@
 package com.atguigu.springcloud.service;
 
 import cn.hutool.core.util.IdUtil;
+import com.atguigu.springcloud.entities.CommonResult;
+import com.atguigu.springcloud.feign.PaymentProviderFeign;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -13,11 +16,14 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class PaymentService {
 
-
+    @Autowired
+    private PaymentProviderFeign  paymentProviderFeign;
 
     //=============================================服务降级==============================
     //成功
     public String paymentInfo_OK(Integer id){
+        CommonResult syncPaymentById = paymentProviderFeign.getSyncPaymentById(1L);
+        System.out.println("syncPaymentById.toString() = " + syncPaymentById.toString());
         return "线程池："+Thread.currentThread().getName()+"   paymentInfo_OK,id：  "+id+"\t"+"哈哈哈"  ;
     }
 

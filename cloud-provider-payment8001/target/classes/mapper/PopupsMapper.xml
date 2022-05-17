@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.springcloud.dao.PopupsMapper">
+
+    <resultMap id="BaseResultMap" type="com.atguigu.springcloud.vo.Popups">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="episode_num" column="episode_num" jdbcType="INTEGER"/>
+            <result property="content" column="content" jdbcType="VARCHAR"/>
+            <result property="create_time" column="create_time" jdbcType="VARCHAR"/>
+            <result property="update_time" column="update_time" jdbcType="VARCHAR"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,episode_num,content,
+        create_time,update_time,name
+    </sql>
+    <insert id="insertBatch">
+        insert into popups(id,episode_num,content,
+        create_time,update_time,name)
+        values
+        <foreach collection="popupsCollection" item="item" separator=",">
+            (#{item.id,jdbcType=NUMERIC},#{item.episode_num,jdbcType=NUMERIC},#{item.content,jdbcType=VARCHAR},
+            #{item.create_time,jdbcType=VARCHAR},#{item.update_time,jdbcType=VARCHAR},#{item.name,jdbcType=VARCHAR})
+        </foreach>
+    </insert>
+</mapper>

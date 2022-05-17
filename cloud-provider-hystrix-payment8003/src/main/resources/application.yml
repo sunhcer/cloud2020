@@ -25,3 +25,13 @@ spring:
     username: root
     password: mysql1234
 
+ribbon:
+  #  建立连接的时间
+  ReadTimeout:  3200
+  #  连接持续时间
+  ConnectTimeout: 3000
+  MaxAutoRetries: 0
+  MaxAutoRetriesNextServer: 1
+  #  根据http响应码重试
+  retryableStatusCodes: 404,502,408
+

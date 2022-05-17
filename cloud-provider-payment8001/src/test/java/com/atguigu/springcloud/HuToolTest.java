@@ -2,13 +2,19 @@ package com.atguigu.springcloud;
 
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONArray;
+import cn.hutool.json.JSONUtil;
 import com.atguigu.springcloud.annotation.MemoryCaculateLog;
 import com.atguigu.springcloud.aspect.MemeryAspect;
 import com.atguigu.springcloud.controller.MybtisController;
+import com.atguigu.springcloud.dao.PopupsMapper;
 import com.atguigu.springcloud.entities.User;
-import org.aspectj.lang.annotation.AfterReturning;
+import com.atguigu.springcloud.vo.Popups;
+import com.atguigu.springcloud.vo.PopupsVo;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,12 +23,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.File;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -125,6 +137,106 @@ public class HuToolTest {
         User ds = user.setId(11L).
                 setName("ds");
         System.out.println("ds = " + ds);
+    }
+
+    @Autowired
+    private RedisTemplate redisTemplate;
+    @Test
+    public void test111() throws InterruptedException {
+        String isExpireKey = "isExpireKey";
+        String isExpireValue = "isExpireValue";
+        if (redisTemplate.hasKey(isExpireKey)){
+            redisTemplate.delete(isExpireKey);
+        }
+        redisTemplate.opsForValue().set(isExpireKey,isExpireValue);
+        redisTemplate.expire(isExpireKey,10, TimeUnit.SECONDS);
+//      // ttl指令对应的java方法
+        System.out.println("redisTemplate.opsForValue().getOperations().getExpire(isExpireKey) = " + redisTemplate.opsForValue().getOperations().getExpire(isExpireKey));
+        Thread.sleep(14000);
+//        System.out.println("redisTemplate.opsForValue().getOperations().getExpire(isExpireKey) = " + redisTemplate.opsForValue().getOperations().getExpire(isExpireKey));
+/**/
+//
+        //截取value
+        String trimKey ="trimKey";
+        String trimValue = "trimValue";
+        if (redisTemplate.hasKey(trimKey)){
+            redisTemplate.delete(trimKey);
+        }
+        redisTemplate.opsForValue().set(trimKey,trimValue,120,TimeUnit.SECONDS);
+        String s = redisTemplate.opsForValue().get(trimKey, 0, 1);
+        System.out.println("trimValue = " + s);
+        Object o = redisTemplate.opsForValue().get(trimKey);
+        System.out.println("trimValue = " + o);
+
+        redisTemplate.setKeySerializer(RedisSerializer.json());
+        redisTemplate.setValueSerializer(RedisSerializer.json());
+        if (redisTemplate.hasKey(trimKey)){
+            redisTemplate.delete(trimKey);
+        }
+        redisTemplate.opsForValue().set(trimKey,trimValue,120,TimeUnit.SECONDS);
+        String s1 = redisTemplate.opsForValue().get(trimKey, 0, 1);
+        System.out.println("trimValue = " + s1);
+        Object o1 = redisTemplate.opsForValue().get(trimKey);
+        System.out.println("trimValue = " + o1);
+
+    }
+
+    @Test
+    public void test1111(){
+    
+    }
+
+    private <T> void getdy(List<T> list){
+        System.out.println("1111");
+    }
+
+
+
+
+    @Autowired
+    PopupsMapper popupsMapper;
+
+    @Test
+    public void test333(){
+//        File file=new File("D:\\软件\\弹幕\\黑色四叶草第18集-番剧-全集-高清正版在线观看-bilibili-哔哩哔哩 - 18.json");
+        File file = new File("D:\\软件\\弹幕");
+        File[] tempList = file.listFiles();
+        for (File file1 : tempList) {
+            if (file1.isFile()){
+                System.out.println("正在处理文件：" + file1);
+                String content= FileUtil.readString(file1,"UTF-8");
+                String name1 = file1.getName();
+                int i1 = name1.indexOf("第");
+                int i2 = name1.indexOf("集");
+                List<PopupsVo> popupsVo = JSONUtil.toList(JSONUtil.parseArray(content), PopupsVo.class);
+                Long episode_num =  Long.valueOf(name1.substring(i1+1, i2));
+                String name = "黑色四叶草";
+
+                if (episode_num==18||episode_num==101){
+                    continue;
+                }
+                List<Popups>  popups = convert2Popups(popupsVo,episode_num,name);
+
+                int i = popupsMapper.insertBatch(popups);
+
+
+            }
+        }
+
+    }
+
+    private List<Popups> convert2Popups(List<PopupsVo> popupsVo, Long episode_num, String name) {
+        return popupsVo.stream().map(source->{
+            Popups popups = new Popups();
+            popups.setId(RandomUtil.randomLong());
+            popups.setContent(source.getContent());
+            popups.setEpisode_num(Integer.valueOf(episode_num.toString()));
+            popups.setName(name);
+            popups.setCreate_time(DateUtil.now());
+            popups.setUpdate_time(DateUtil.now());
+            return popups;
+        }).collect(Collectors.toList());
+
     }
 
 

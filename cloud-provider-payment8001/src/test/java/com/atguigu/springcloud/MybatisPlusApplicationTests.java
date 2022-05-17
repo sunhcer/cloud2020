@@ -175,5 +175,9 @@ public class MybatisPlusApplicationTests {
                 .forEach(System.out::println);
     }
 
+    @Test
+    public void test1(){
+        userService.list().forEach(System.out::println);
+    }
 
 }

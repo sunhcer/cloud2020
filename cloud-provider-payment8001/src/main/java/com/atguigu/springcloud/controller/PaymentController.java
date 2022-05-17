@@ -96,17 +96,18 @@ public class PaymentController {
 
     @GetMapping("payment/getSync/{id}")
     public CommonResult getSyncPaymentById(@PathVariable("id")Long id){
-        for (int i = 0; i <200 ; i++) {
-            pool.execute(new Runnable() {
-                @Override
-                public void run() {
-                    syncGet(id);
-                }
-            });
-        }
+//        for (int i = 0; i <200 ; i++) {
+//            pool.execute(new Runnable() {
+//                @Override
+//                public void run() {
+//                    syncGet(id);
+//                }
+//            });
+//        }
+        return CommonResult.succ("1231");
 
 //        return CommonResult.succ("听说你很帅哦"+payment+serverPort);
-        return CommonResult.succ("听说你很帅哦"+serverPort);
+//        return CommonResult.succ("听说你很帅哦"+serverPort);
     }
 
     private void syncGet(Long id) {
@@ -168,5 +169,14 @@ public class PaymentController {
         log.info("参数:");
         return CommonResult.succ(notNullVo);
     }
+
+    /*弹幕接口 start*/
+    @GetMapping(value = "popups/collect")
+    @ControllerWebLog(name = "接口日志 POST 请求测试", intoDb = false)
+    public CommonResult collect(){
+        return CommonResult.succ(paymentService.collect());
+    }
+
+    /*弹幕接口 end*/
 
 }

@@ -1,13 +1,20 @@
 package com.atguigu.springcloud;
 
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.util.RandomUtil;
+import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONUtil;
 import com.atguigu.springcloud.entities.NotNullGrandSonVo;
 import com.atguigu.springcloud.entities.NotNullSonVo;
 import com.atguigu.springcloud.entities.NotNullVo;
 import com.atguigu.springcloud.entities.Payment;
+import com.atguigu.springcloud.vo.PopupsVo;
+
 import org.junit.Test;
 
 import javax.validation.constraints.NotNull;
+import java.io.File;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -90,6 +97,29 @@ public class OptionalTest {
         Collections.swap(collect,0,2);
         System.out.println(collect);
 
+        System.out.println(RandomUtil.randomLong());
     }
 
+    @Test
+    public void test(){
+        ArrayList<String> files = new ArrayList<String>();
+        File file = new File("D:\\软件\\弹幕");
+        File[] tempList = file.listFiles();
+
+        for (int i = 0; i < tempList.length; i++) {
+            if (tempList[i].isFile()) {
+              System.out.println("文     件：" + tempList[i]);
+                System.out.println("tempList[i].getName() = " + tempList[i].getName());
+                String name1 = tempList[i].getName();
+                int i1 = name1.indexOf("第");
+                int i2 = name1.indexOf("集");
+                System.out.println("name1.substring(i1,i2) = " + name1.substring(i1+1, i2));
+                files.add(tempList[i].toString());
+            }
+            if (tempList[i].isDirectory()) {
+              System.out.println("文件夹：" + tempList[i]);
+            }
+        }
+
+    }
 }

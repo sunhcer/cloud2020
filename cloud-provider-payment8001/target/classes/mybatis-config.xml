@@ -27,10 +27,13 @@
         <setting name="localCacheScope" value="SESSION"/>
         <!-- 设置但JDBC类型为空时,某些驱动程序 要指定值,default:OTHER，插入空值时不需要指定类型 -->
         <setting name="jdbcTypeForNull" value="NULL"/>
+
         <!--   日志     -->
         <setting name="logImpl" value="LOG4J"/>
     </settings>
-    
+<!--    <typeHandlers>-->
+<!--        <typeHandler handler="org.mybatis.example.ExampleTypeHandler"/>-->
+<!--    </typeHandlers>-->
     <plugins>
         <plugin interceptor="com.github.pagehelper.PageHelper">
             <property name="dialect" value="mysql"/>

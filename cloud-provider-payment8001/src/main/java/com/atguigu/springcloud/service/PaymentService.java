@@ -10,6 +10,8 @@ public interface PaymentService {
     public Payment getPaymentById(@Param("id")Long id);
     public List<Payment> getPaymentList(@Param("pageNum")int pageNum, @Param("pageSize")int pageSize);
 
+    String collect();
+
 //    int updateCountry(StringBuilder stringBuilder);
 //
 //    int updateCertificate(StringBuilder stringBuilder);

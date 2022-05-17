@@ -34,7 +34,7 @@ public class AccountServiceImpl implements AccountService {
      * 扣减账户余额
      */
     @Override
-    @Transactional
+//    @Transactional
     public void decrease(Long userId, BigDecimal money) {
 
         LOGGER.info("------->account-service中扣减账户余额开始");

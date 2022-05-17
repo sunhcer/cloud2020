@@ -3,8 +3,8 @@
 
 <mapper namespace="com.atguigu.springcloud.dao.PaymentDao">
 
-    <insert id="create" parameterType="Payment" useGeneratedKeys="true" keyProperty="id">
-            insert into payment(serial) values(${serial});
+    <insert id="create" parameterType="com.atguigu.springcloud.entities.Payment" useGeneratedKeys="true" keyProperty="id">
+            insert into payment(serial) values(#{serial});
 
     </insert>
 
@@ -20,4 +20,154 @@
     <select id="findAllPayment"   resultMap="BaseResultMap">
             select * from payment
     </select>
+
+<!--    <update id="updateCountry" parameterType="java.lang.String">-->
+<!--        update code_libaray set item_no=#{itemNo} , item_name=#{countryNameNew}-->
+<!--        where code_no='TP_Nationality_2' and item_name=#{countrynameOld}-->
+<!--    </update>-->
+
+<!--&lt;!&ndash;    sortCountry&ndash;&gt;-->
+<!--    <update id="sortCountry" >-->
+<!--        update code_libaray set sort_no=#{sortNo}-->
+<!--        where code_no='TP_Nationality_2' and item_name=#{countryNameNew}-->
+<!--    </update>-->
+
+<!--&lt;!&ndash;    updateCertificate&ndash;&gt;-->
+<!--    <update id="updateCertificate" parameterType="java.lang.String">-->
+<!--        update code_libaray set item_no=#{itemNoNeed},code_no='TP_DocumentType_2'-->
+<!--        where code_no=#{type} and item_name=#{certificateNameNeed}-->
+<!--    </update>-->
+
+<!--&lt;!&ndash;    sortCertificate&ndash;&gt;-->
+<!--    <update id="sortCertificate" >-->
+<!--        update code_libaray set sort_no=#{sortNo}-->
+<!--        where code_no='TP_DocumentType_2' and item_name=#{certificateNameNeed}-->
+<!--    </update>-->
+<!--&lt;!&ndash;   updateCoin &ndash;&gt;-->
+<!--    <update id="updateCoin" >-->
+<!--        update code_libaray set item_no=#{itemNoNeed},code_no='TP_currencyCode_2',sort_no=#{sortNo}-->
+<!--        where code_no=#{type} and item_name=#{coinNameNeed}-->
+<!--    </update>-->
+
+<!--&lt;!&ndash;    updateExchange&ndash;&gt;-->
+<!--    <update id="updateExchange" >-->
+<!--        update code_libaray set item_no=#{itemNoNeed},code_no='TP_ListedExchange_2',sort_no=#{sortNo}-->
+<!--        where code_no=#{type} and item_name=#{coinNameNeed}-->
+<!--    </update>-->
+
+<!--&lt;!&ndash;    queryCodeLibrary&ndash;&gt;-->
+<!--    <select id="queryCodeLibrary" resultType="com.atguigu.springcloud.entities.CodeLibrary">-->
+<!--        select-->
+<!--        code_no,-->
+<!--        item_no,-->
+<!--        item_name-->
+<!--        from-->
+<!--        code_libaray-->
+<!--        where code_no=#{hmCodeNo} and item_name=#{hmItemName}-->
+<!--    </select>-->
+
+<!--&lt;!&ndash;    queryLikeNameCodeLibrary&ndash;&gt;-->
+<!--    <select id="queryLikeNameCodeLibrary" resultType="com.atguigu.springcloud.entities.CodeLibrary">-->
+<!--        select-->
+<!--        code_no,-->
+<!--        item_no,-->
+<!--        item_name-->
+<!--        from-->
+<!--        code_libaray-->
+<!--        where code_no=#{hmCodeNo} and item_name like CONCAT(CONCAT('%',#{hmItemName},'%')) limit 1-->
+<!--    </select>-->
+
+<!--&lt;!&ndash;    queryCodeLibraryByCodeAndItemNo&ndash;&gt;-->
+<!--    <select id="queryCodeLibraryByCodeAndItemNo" resultType="com.atguigu.springcloud.entities.CodeLibrary">-->
+<!--        select-->
+<!--        code_no,-->
+<!--        item_no,-->
+<!--        item_name-->
+<!--        from-->
+<!--        code_libaray-->
+<!--        where code_no=#{hmCodeNo} and item_no=#{itemNo} limit 1-->
+<!--    </select>-->
+
+
+<!--    <select id="queryCodeLibrary2" resultType="com.atguigu.springcloud.entities.CodeLibrary">-->
+<!--        select-->
+<!--        code_no,-->
+<!--        item_no,-->
+<!--        item_name-->
+<!--        from-->
+<!--        code_libaray-->
+<!--        where code_no=#{hmCodeNo} and item_no like CONCAT(CONCAT('%',#{likeItemNo},'%')) and item_name=#{itemName}-->
+<!--    </select>-->
+
+
+<!--    &lt;!&ndash;    insertEntCodeMapping&ndash;&gt;-->
+<!--    <insert id="insertEntCodeMapping" parameterType="com.atguigu.springcloud.entities.EntCodeMappingEntity">-->
+<!--        insert into ent_code_mapping(-->
+<!--        item_no,-->
+<!--        item_name,-->
+<!--        hm_item_no,-->
+<!--        hm_code_no,-->
+<!--        declare_method,-->
+<!--        create_time,-->
+<!--        city_code-->
+<!--        )-->
+<!--        values(-->
+<!--        #{itemNo},-->
+<!--        #{itemName},-->
+<!--        #{hmItemNo},-->
+<!--        #{hmCodeNo},-->
+<!--        #{declareMethod},-->
+<!--        #{createTime},-->
+<!--        #{cityCode}-->
+<!--        )-->
+<!--    </insert>-->
+
+<!--    <select id="queryCodeLibraryList" resultType="com.atguigu.springcloud.entities.CodeLibrary">-->
+<!--        select-->
+<!--        code_no,-->
+<!--        item_no,-->
+<!--        item_name-->
+<!--        from-->
+<!--        code_libaray-->
+<!--        where-->
+<!--        code_no=#{codeNo}-->
+<!--    </select>-->
+
+<!--&lt;!&ndash;addCountryEng&ndash;&gt;-->
+<!--    <update id="addCountryEng">-->
+<!--        update code_libaray-->
+<!--        set relative_code1=#{code1}-->
+<!--        where code_no=#{codeNo} and item_no=#{itemNo}-->
+<!--    </update>-->
+
+<!--    <select id="queryCodeLibraryForIndustry" resultType="com.atguigu.springcloud.entities.CodeLibrary">-->
+<!--        select-->
+<!--        code_no,-->
+<!--        item_no,-->
+<!--        item_name-->
+<!--        from-->
+<!--        code_libaray-->
+<!--        where-->
+<!--        code_no=#{hmCodeNo}-->
+<!--        and item_name =#{hmItemName}-->
+<!--        and item_no like CONCAT(CONCAT('%',#{itemNo},'%')) limit 1-->
+<!--    </select>-->
+
+<!--    queryCodeLibraryListAll-->
+<!--    <select id="queryCodeLibraryListAll" resultType="com.atguigu.springcloud.entities.EntCodeMappingEntity">-->
+<!--        select-->
+<!--        *-->
+<!--        from-->
+<!--        ent_code_mapping-->
+<!--    </select>-->
+
+<!--    <update id="addNameForMapping" parameterType="com.atguigu.springcloud.entities.EntCodeMappingEntity">-->
+<!--        update ent_code_mapping-->
+<!--        set hm_item_name=-->
+<!--        (-->
+<!--        select item_name from code_libaray where code_no=#{entCodeMappingEntity.hmCodeNo} and item_no=#{entCodeMappingEntity.hmItemNo}-->
+<!--        )-->
+<!--        where hm_code_no=#{entCodeMappingEntity.hmCodeNo} and hm_item_no=#{entCodeMappingEntity.hmItemNo} and declare_method='0'-->
+<!--    </update>-->
+
 </mapper>

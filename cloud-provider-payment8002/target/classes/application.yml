@@ -29,5 +29,19 @@ eureka:
     prefer-ip-address: true
 
 mybatis:
+  config-location: classpath:mybatis-config.xml
   mapperLocations: classpath:mapper/*.xml
   type-aliases-package: com.atguigu.springcloud.entities
+
+mybatis-plus:
+  #  config-location: classpath:mybatis-config.xml
+  #  mapperLocations: classpath:mapper/*.xml
+  #  type-aliases-package: com.atguigu.springcloud.entities
+  global-config:
+    db-config:
+      #逻辑删除 全局字段名 添加之后不用添加@TableLogic
+      logic-delete-field: deleted
+      #逻辑删除,未删除的字段值 1
+      logic-not-delete-value: 1
+      #逻辑删除,已删除的字段值 0
+      logic-delete-value: 0

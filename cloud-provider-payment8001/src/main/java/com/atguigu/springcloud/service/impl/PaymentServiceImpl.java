@@ -1,6 +1,8 @@
 package com.atguigu.springcloud.service.impl;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.io.FileUtil;
+import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.atguigu.springcloud.dao.PaymentDao;
@@ -15,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.io.File;
 import java.util.*;
 
 @Service
@@ -43,6 +46,17 @@ public class PaymentServiceImpl implements PaymentService {
         List<Payment> list = paymentDao.findAllPayment();
         return list;
     }
+
+    @Override
+    public String collect() {
+
+        File file=new File("\u202AD:\\软件\\弹幕\\黑色四叶草第18集-番剧-全集-高清正版在线观看-bilibili-哔哩哔哩 - 18.json");
+        String content=FileUtil.readString(file,"UTF-8");
+        JSONArray jsonObject=new JSONArray(content);
+        System.out.println("jsonObject = " + jsonObject.get(0));
+        return null;
+    }
+
 
 
 //    @Override

@@ -1,3 +1,7 @@
+D:\project\threecode\cloud2020\cloud-consumer-feign-hystrix-order8182\src\main\java\com\atguigu\springcloud\service\impl\UserServiceImpl.java
+D:\project\threecode\cloud2020\cloud-consumer-feign-hystrix-order8182\src\main\java\com\atguigu\springcloud\service\UserService.java
+D:\project\threecode\cloud2020\cloud-consumer-feign-hystrix-order8182\src\main\java\com\atguigu\springcloud\dao\UserMapper.java
+D:\project\threecode\cloud2020\cloud-consumer-feign-hystrix-order8182\src\main\java\com\atguigu\springcloud\feign\PaymentProviderFeign.java
 D:\project\threecode\cloud2020\cloud-consumer-feign-hystrix-order8182\src\main\java\com\atguigu\springcloud\service\PaymentHystrix8003Service.java
 D:\project\threecode\cloud2020\cloud-consumer-feign-hystrix-order8182\src\main\java\com\atguigu\springcloud\controller\OrderHystrixController.java
 D:\project\threecode\cloud2020\cloud-consumer-feign-hystrix-order8182\src\main\java\com\atguigu\springcloud\OrderMain8182.java

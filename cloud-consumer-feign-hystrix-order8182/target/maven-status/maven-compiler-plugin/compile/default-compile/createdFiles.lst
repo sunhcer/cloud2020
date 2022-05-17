@@ -1,4 +1,8 @@
+com\atguigu\springcloud\dao\UserMapper.class
+com\atguigu\springcloud\feign\PaymentProviderFeign.class
+com\atguigu\springcloud\OrderMain8182.class
 com\atguigu\springcloud\controller\OrderHystrixController.class
 com\atguigu\springcloud\service\impl\PaymentHystrix8003ServiceFallback.class
+com\atguigu\springcloud\service\impl\UserServiceImpl.class
+com\atguigu\springcloud\service\UserService.class
 com\atguigu\springcloud\service\PaymentHystrix8003Service.class
-com\atguigu\springcloud\OrderMain8182.class
