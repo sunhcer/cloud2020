@@ -7,14 +7,10 @@ public class StaticTest {
     @Test
     public void test1(){
         StaticVo staticVo = StaticVo.getStaticVo();
-
         System.out.println("1----"+staticVo.count1);
         System.out.println("2----"+staticVo.count2);
         System.out.println("3----"+staticVo.count3);
-
         System.out.println(System.nanoTime());
-
-
     }
 
 

@@ -70,6 +70,19 @@
             <version>${project.version}</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.openjdk.jol/jol-core -->
+        <dependency>
+            <!-- https://mvnrepository.com/artifact/org.openjdk.jol/jol-core -->
+                <groupId>org.openjdk.jol</groupId>
+                <artifactId>jol-core</artifactId>
+                <version>0.10</version>
+<!--                <scope>provided</scope>-->
+<!--            因为他是一个偏调试的工具,所以考虑在打包的时候不放进去-->
+<!--            <scope>provided</scope>-->
+
+        </dependency>
+
+
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
