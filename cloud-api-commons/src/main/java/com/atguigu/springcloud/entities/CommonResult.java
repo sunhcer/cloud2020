@@ -26,7 +26,7 @@ public class CommonResult<T> {
 //    }
 
     public static CommonResult succ(String message){
-        return new CommonResult<>(400,message);
+        return new CommonResult<>(200,message);
     }
 
     public static CommonResult succ(Object data){

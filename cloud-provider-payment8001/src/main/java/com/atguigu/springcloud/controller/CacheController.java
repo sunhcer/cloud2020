@@ -109,4 +109,11 @@ public class CacheController {
         }
     }
 
+    @GetMapping("/heartBeat")
+    @MemoryCaculateLog
+    public CommonResult heartBeat(@RequestParam String serviceId){
+        log.info("收到心跳,serviceId:{}",serviceId);
+        userService.heartBeat(serviceId);
+        return CommonResult.succ("serviceId");
+    }
 }
